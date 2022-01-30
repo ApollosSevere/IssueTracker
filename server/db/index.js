@@ -2,10 +2,10 @@
 const db = require("./db");
 
 const User = require("./models/User");
-const History = require("./models/History");
 const Role = require("./models/Role");
-const Project = require("./models/Project");
 const Issue = require("./models/Issue");
+const History = require("./models/History");
+const Project = require("./models/Project");
 const Comment = require("./models/Comment");
 
 // *** Associations could go here! ***//
@@ -33,7 +33,7 @@ Comment.belongsTo(Project);
 Role.hasMany(User);
 User.belongsTo(Role, {
   foreignKey: {
-    allowNull: false,
+    allowNull: true,
     defaultValue: "Submitter",
   },
 });

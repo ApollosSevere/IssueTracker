@@ -18,22 +18,22 @@ module.exports = db.define("issue", {
   actual_end_date: {
     type: Sequelize.DATE,
   },
-  tags: {
-    type: Sequelize.ENUM,
-    values: ["Frontend", "Backend", "Customer"],
-  },
-  status: {
-    type: Sequelize.ENUM,
-    values: ["Open", "Resolved", "In Progress", "Additional Info Required"],
-  },
-  priority: {
-    type: Sequelize.ENUM,
-    values: ["Low", "Medium", "High", "Immediate"],
-  },
   actual_resolution_date: {
     type: Sequelize.DATE,
   },
   resolution_summary: {
     type: Sequelize.TEXT,
+  },
+  tags: {
+    type: Sequelize.ENUM,
+    values: ["Frontend", "Backend", "Customer"],
+  },
+  priority: {
+    type: Sequelize.ENUM,
+    values: ["Low", "Medium", "High", "Immediate"],
+  },
+  status: {
+    type: Sequelize.ENUM,
+    values: ["Open", "Resolved", "In Progress", "Additional Info Required"],
   },
 });
