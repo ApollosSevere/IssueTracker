@@ -1,15 +1,14 @@
 //this is the access point for all things database related!
+const db = require("./db");
+
+const User = require("./models/User");
 const History = require("./models/History");
 const Role = require("./models/Role");
 const Project = require("./models/Project");
 const Issue = require("./models/Issue");
+const Comment = require("./models/Comment");
 
-const db = require("./db");
-
-const User = require("./models/User");
-
-//associations could go here!
-
+// *** Associations could go here! ***//
 User.belongsToMany(Project, { through: "assignment" });
 Project.belongsToMany(User, { through: "assignment" });
 
@@ -21,6 +20,15 @@ Issue.belongsTo(User, { as: "submitter" });
 
 Project.hasMany(Issue);
 Issue.belongsTo(Project);
+
+User.hasMany(Comment);
+Comment.belongsTo(User);
+
+Issue.hasMany(Comment);
+Comment.belongsTo(Issue);
+
+Project.hasMany(Comment);
+Comment.belongsTo(Project);
 
 Role.hasMany(User);
 User.belongsTo(Role, {
@@ -38,5 +46,6 @@ module.exports = {
     History,
     Project,
     Issue,
+    Comment,
   },
 };
