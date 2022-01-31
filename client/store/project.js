@@ -13,7 +13,7 @@ const _setProjects = (projects) => ({
 });
 
 /** THUNK CREATORS */
-export const getProjects = () => async (dispatch) => {
+export const loadProjects = () => async (dispatch) => {
   try {
     const { data: projects } = await axios.get("/api/projects", {
       headers: {
@@ -22,12 +22,12 @@ export const getProjects = () => async (dispatch) => {
     });
     dispatch(_setProjects(projects));
   } catch (err) {
-    return dispatch(setAuth({ error: err }));
+    return dispatch(_setProjects({ error: err }));
   }
 };
 
 /* REDUCER */
-export function projectReducer(state = {}, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case SET_PROJECTS:
       return action.payload;

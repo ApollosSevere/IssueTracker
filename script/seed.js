@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Role },
+  models: { User, Role, Project },
 } = require("../server/db");
 
 /**
@@ -24,9 +24,14 @@ async function seed() {
     Role.create({ name: "Submitter", role_desc: "Complainer" }),
     User.create({ username: "cody", password: "123" }),
     User.create({ username: "murphy", password: "123" }),
+    Project.create({
+      project_name: "Blog Assignment",
+      start_date: new Date(),
+      target_end_date: new Date(),
+    }),
   ]);
 
-  console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${users.length} things`);
   console.log(`seeded successfully`);
   return {
     users: {

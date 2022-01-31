@@ -17,4 +17,8 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(Home);
+const mapDispatch = (dispatch) => ({
+  getProducts: () => dispatch(fetchProducts()),
+});
+
+export default connect(mapState, mapDispatch)(Home);
