@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Role, Project, Assignment, Issue },
+  models: { User, Role, Project, Assignment, Issue, Chore },
 } = require("../server/db");
 
 /**
@@ -23,20 +23,48 @@ async function seed() {
     Role.create({ name: "Developer", role_desc: "Writes Code" }),
     Role.create({ name: "Submitter", role_desc: "Complainer" }),
 
-    User.create({ username: "cody", password: "123" }),
-    User.create({ username: "Apollos", password: "123", roleName: "Admin" }),
-    User.create({ username: "Alexandria", password: "123" }),
-    User.create({ username: "Haddassah", password: "123" }),
-    User.create({ username: "Chuck", password: "123" }),
-    User.create({ username: "Melani", password: "123" }),
-    User.create({ username: "Bob", password: "123" }),
+    User.create({
+      username: "cody",
+      password: "123",
+      email: "safadsapollos@gmail.com",
+    }),
+    User.create({
+      username: "Apollos",
+      password: "123",
+      roleName: "Admin",
+      email: "severeapollos@gmail.com",
+    }),
+    User.create({
+      username: "Alexandria",
+      password: "123",
+      email: "sdfallos@gmail.com",
+    }),
+    User.create({
+      username: "Haddassah",
+      password: "123",
+      email: "dadfad@gmail.com",
+    }),
+    User.create({
+      username: "Chuck",
+      password: "123",
+      email: "sdsadsdlos@gmail.com",
+    }),
+    User.create({
+      username: "Melani",
+      password: "123",
+      email: "sedjaksldjas@gmail.com",
+    }),
+    User.create({ username: "Bob", password: "123", email: "sevffjadal.com" }),
     Project.create({
       name: "Blog Assignment",
+      project_desc:
+        "This is a platform where users can share their brilliant ideas!",
       start_date: new Date(),
       target_end_date: new Date(),
     }),
     Project.create({
       name: "Fresh",
+      project_desc: "Food/Pantry management system!",
       start_date: new Date(),
       target_end_date: new Date(),
     }),
@@ -84,38 +112,79 @@ async function seed() {
 
     await Issue.create({
       issue_summary: "Testing Issue...",
-      userUsername: "Bob",
+      submitter_username: "Bob",
       projectName: "Blog Assignment",
     });
 
   await Issue.create({
     issue_summary: "Header link not working",
-    userUsername: "Apollos",
+    submitter_username: "Apollos",
     projectName: "Blog Assignment",
   });
 
   await Issue.create({
     issue_summary: "We need more juice",
-    userUsername: "Apollos",
+    submitter_username: "Apollos",
     projectName: "Blog Assignment",
   });
 
   await Issue.create({
     issue_summary: "I have to go to jazz class",
-    userUsername: "Apollos",
+    submitter_username: "Apollos",
     projectName: "Blog Assignment",
   });
 
   await Issue.create({
     issue_summary: "What is 2 + 4?",
-    userUsername: "Apollos",
+    submitter_username: "Apollos",
     projectName: "Blog Assignment",
   });
 
   await Issue.create({
     issue_summary: "Details button not working",
-    userUsername: "Apollos",
+    submitter_username: "Apollos",
     projectName: "Blog Assignment",
+  });
+
+  await Chore.create({
+    start_date: new Date(),
+    assigned_user: "Alexandria",
+    issueId: 1,
+  });
+
+  await Chore.create({
+    start_date: new Date(),
+    assigned_user: "Haddassah",
+    issueId: 1,
+  });
+
+  await Chore.create({
+    start_date: new Date(),
+    assigned_user: "Alexandria",
+    issueId: 3,
+  });
+
+  await Chore.create({
+    start_date: new Date(),
+    assigned_user: "Melani",
+    issueId: 4,
+  });
+
+  await Chore.create({
+    start_date: new Date(),
+    assigned_user: "Bob",
+    issueId: 5,
+  });
+
+  await Chore.create({
+    start_date: new Date(),
+    assigned_user: "Apollos",
+    issueId: 1,
+  });
+  await Chore.create({
+    start_date: new Date(),
+    assigned_user: "Apollos",
+    issueId: 6,
   });
 
   console.log(`seeded ${users.length} things`);

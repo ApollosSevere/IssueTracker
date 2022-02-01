@@ -4,6 +4,7 @@ const db = require("./db");
 const User = require("./models/User");
 const Role = require("./models/Role");
 const Issue = require("./models/Issue");
+const Chore = require("./models/Chore");
 const Assignment = require("./models/Assignment");
 const History = require("./models/History");
 const Project = require("./models/Project");
@@ -13,11 +14,25 @@ const Comment = require("./models/Comment");
 User.belongsToMany(Project, { through: Assignment });
 Project.belongsToMany(User, { through: Assignment });
 
-User.belongsToMany(Issue, { through: "chore" });
-Issue.belongsToMany(User, { through: "chore" });
+// All the issues currently assigned to any particular user!!
+User.belongsToMany(Issue, {
+  as: "current_tasks",
+  through: Chore,
+  foreignKey: "assigned_user",
+});
+// This is for the link between the assigned developers to tickets
+Issue.belongsToMany(User, {
+  as: "assigned_users",
+  through: Chore,
+});
 
-User.hasMany(Issue);
-Issue.belongsTo(User);
+// This is for the link between the submitter and issue
+User.hasMany(Issue, {
+  foreignKey: "submitter_username",
+});
+Issue.belongsTo(User, {
+  foreignKey: "submitter_username",
+});
 
 Project.hasMany(Issue);
 Issue.belongsTo(Project);
@@ -44,6 +59,7 @@ module.exports = {
   models: {
     User,
     Role,
+    Chore,
     History,
     Project,
     Issue,

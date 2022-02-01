@@ -29,15 +29,54 @@ router.get("/assigned/:projectId", async (req, res, next) => {
         {
           model: User,
           // where: { id: userId },
-          attributes: ["username", "first_name", "last_name", "email"],
+          attributes: [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "roleName",
+          ],
         },
-        { model: Issue },
+
+        {
+          model: Issue,
+          include: {
+            model: User,
+            as: "assigned_users",
+            // attributes: [
+            //   "username",
+            //   "first_name",
+            //   "last_name",
+            //   "email",
+            //   "roleName",
+            // ],
+          },
+        },
       ],
     });
 
     // const userData = await User.findOne({
     //   where: { username: "Apollos" },
     //   include: [{ model: Project }, { model: Issue }],
+    // });
+
+    // const allProjectData = await Project.findAll({
+    //   // where: { name: project_name },
+    //   include: [
+    //     {
+    //       model: User,
+    //       // where: { id: userId },
+    //       attributes: [
+    //         "username",
+    //         "first_name",
+    //         "last_name",
+    //         "email",
+    //         "roleName",
+    //       ],
+    //       include: [{ model: Issue }],
+    //     },
+    //     { model: Issue },
+    //   ],
     // });
 
     res.json(projectData);

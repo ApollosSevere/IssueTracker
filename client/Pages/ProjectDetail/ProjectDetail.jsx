@@ -4,8 +4,67 @@ import { useParams } from "react-router-dom";
 
 import { fetchProjectUsers } from "../../store/users";
 
+const RowItem = ({ user }) => {
+  return (
+    <tr>
+      <td>
+        <p className="username">{user.username}</p>
+      </td>
+      <td>
+        <p className="roleName">{user.roleName}</p>
+      </td>
+      <td>
+        <p className="email">{user.email}</p>
+      </td>
+    </tr>
+  );
+};
+
+const RowItemIssue = ({ issue }) => {
+  return (
+    <tr>
+      <td>
+        <p className="username">{user.summary}</p>
+      </td>
+      <td>
+        <p className="roleName">{user.createdAt}</p>
+      </td>
+      <td>
+        <p className="email">{user.email}</p>
+      </td>
+    </tr>
+  );
+};
+
 export const ProjectDetail = ({ projectData, getProjectUsers, userId }) => {
   const { projectId } = useParams();
+  const info = projectData ? projectData : "Loading ..";
+
+  const rowData =
+    Object.keys(projectData).length > 0 ? (
+      projectData.users.map((user) => (
+        <RowItem key={user.username} user={user} />
+      ))
+    ) : (
+      <tr>
+        <td>
+          <p>"loading..."</p>
+        </td>
+      </tr>
+    );
+
+  const rowDataIssues =
+    Object.keys(projectData).length > 0 ? (
+      projectData.issues.map((issue) => (
+        <RowItemIssue key={issue.id} issue={issue} />
+      ))
+    ) : (
+      <tr>
+        <td>
+          <p>"loading..."</p>
+        </td>
+      </tr>
+    );
 
   useEffect(() => {
     try {
@@ -15,7 +74,44 @@ export const ProjectDetail = ({ projectData, getProjectUsers, userId }) => {
     }
   }, []);
 
-  return <div>{JSON.stringify(projectData.users)}</div>;
+  return (
+    <div className="pd">
+      <h3 className="pd-MainTitle">Project Details</h3>
+      <p className="pd-name">Name: {info.name}</p>
+      <p className="pd-name">Description: {info.project_desc}</p>
+
+      <div className="pd-users">
+        <h3 className="pd-title">Assigned Users</h3>
+
+        <table className="pd-usersTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Current Role</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+
+          <tbody>{rowData}</tbody>
+        </table>
+      </div>
+
+      <div className="pd-tickets">
+        <h3 className="pd-title">Project Tickets</h3>
+        <table className="pd-issuesTable">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Created</th>
+              <th>Assigned To</th>
+            </tr>
+          </thead>
+
+          <tbody>{rowDataIssues}</tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => ({
