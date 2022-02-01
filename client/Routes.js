@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm/AuthForm";
-import Home from "./components/Template";
+import ProjectDetail from "./Pages/ProjectDetail/ProjectDetail.jsx";
 import { me } from "./store";
 
 import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
@@ -24,6 +24,7 @@ class Routes extends Component {
           <Switch>
             {/* For all pages: margin-right: 250px !! */}
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/projectDetail/:projectId" component={ProjectDetail} />
             <Redirect to="/dashboard" />
           </Switch>
         ) : (
@@ -43,7 +44,7 @@ const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
-    isLoggedIn: !!state.auth.id,
+    isLoggedIn: !!state.auth.username,
   };
 };
 

@@ -1,11 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const ProjectItem = ({ project }) => {
-  const { project_name, start_date, target_end_date } = project;
+  const { name, start_date, target_end_date } = project;
   return (
     <>
-      <div className="pi-name">Project Name: {project_name}</div>
+      <Link to={`/projectDetail/${project.name}`}>
+        <h3 className="pi-name">Project Name: {name}</h3>
+      </Link>
+
       <div className="pi-date">Start Date: {start_date}</div>
       <div className="pi-date">Target End Date: {target_end_date}</div>
     </>
@@ -16,7 +20,7 @@ export const ProjectView = ({ projects, error }) => {
   const projectItems =
     projects.length > 0 && Array.isArray(projects) ? (
       projects.map((project) => (
-        <ProjectItem key={project.id} project={project} />
+        <ProjectItem key={project.name} project={project} />
       ))
     ) : (
       <p>No projects to work on!</p>

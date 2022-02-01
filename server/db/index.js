@@ -4,19 +4,20 @@ const db = require("./db");
 const User = require("./models/User");
 const Role = require("./models/Role");
 const Issue = require("./models/Issue");
+const Assignment = require("./models/Assignment");
 const History = require("./models/History");
 const Project = require("./models/Project");
 const Comment = require("./models/Comment");
 
 // *** Associations could go here! ***//
-User.belongsToMany(Project, { through: "assignment" });
-Project.belongsToMany(User, { through: "assignment" });
+User.belongsToMany(Project, { through: Assignment });
+Project.belongsToMany(User, { through: Assignment });
 
 User.belongsToMany(Issue, { through: "chore" });
 Issue.belongsToMany(User, { through: "chore" });
 
 User.hasMany(Issue);
-Issue.belongsTo(User, { as: "submitter" });
+Issue.belongsTo(User);
 
 Project.hasMany(Issue);
 Issue.belongsTo(Project);
@@ -47,5 +48,6 @@ module.exports = {
     Project,
     Issue,
     Comment,
+    Assignment,
   },
 };

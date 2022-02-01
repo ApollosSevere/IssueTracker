@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Role, Project },
+  models: { User, Role, Project, Assignment, Issue },
 } = require("../server/db");
 
 /**
@@ -10,7 +10,7 @@ const {
  *      match the models, and populates the database.
  */
 async function seed() {
-  await db.sync(); // clears db and matches models to tables
+  await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
   // Creating Users
@@ -22,14 +22,101 @@ async function seed() {
     }),
     Role.create({ name: "Developer", role_desc: "Writes Code" }),
     Role.create({ name: "Submitter", role_desc: "Complainer" }),
+
     User.create({ username: "cody", password: "123" }),
-    User.create({ username: "murphy", password: "123" }),
+    User.create({ username: "Apollos", password: "123", roleName: "Admin" }),
+    User.create({ username: "Alexandria", password: "123" }),
+    User.create({ username: "Haddassah", password: "123" }),
+    User.create({ username: "Chuck", password: "123" }),
+    User.create({ username: "Melani", password: "123" }),
+    User.create({ username: "Bob", password: "123" }),
     Project.create({
-      project_name: "Blog Assignment",
+      name: "Blog Assignment",
+      start_date: new Date(),
+      target_end_date: new Date(),
+    }),
+    Project.create({
+      name: "Fresh",
       start_date: new Date(),
       target_end_date: new Date(),
     }),
   ]);
+
+  // await Assignment.create({ userId: 1, projectName: "Blog Assignment" }),
+  await Assignment.create({
+    userUsername: "Apollos",
+    projectName: "Blog Assignment",
+  }),
+    await Assignment.create({
+      userUsername: "Apollos",
+      projectName: "Fresh",
+    }),
+    await Assignment.create({
+      userUsername: "Alexandria",
+      projectName: "Fresh",
+    }),
+    await Assignment.create({
+      userUsername: "Bob",
+      projectName: "Blog Assignment",
+    }),
+    await Assignment.create({ userUsername: "Chuck", projectName: "Fresh" }),
+    await Assignment.create({
+      userUsername: "Melani",
+      projectName: "Blog Assignment",
+    }),
+    await Assignment.create({
+      userUsername: "Haddassah",
+      projectName: "Fresh",
+    }),
+    // const assignments = users.map(async (user) => {
+    //   await Assignment.create({
+    //     userId: user.id,
+    //     projectId: "Blog Assignment",
+    //   });
+    // });
+
+    // Creating Issues
+    // await Issue.create({
+    //   issue_summary: "Testing Issue...",
+    //   userUsername: "Bob",
+    //   projectName: "Fresh",
+    // }); // <-- This should not be able to work! *Find a way to check for this: Bob is not assigned to project Fresh, therefore he cannot make an issue
+
+    await Issue.create({
+      issue_summary: "Testing Issue...",
+      userUsername: "Bob",
+      projectName: "Blog Assignment",
+    });
+
+  await Issue.create({
+    issue_summary: "Header link not working",
+    userUsername: "Apollos",
+    projectName: "Blog Assignment",
+  });
+
+  await Issue.create({
+    issue_summary: "We need more juice",
+    userUsername: "Apollos",
+    projectName: "Blog Assignment",
+  });
+
+  await Issue.create({
+    issue_summary: "I have to go to jazz class",
+    userUsername: "Apollos",
+    projectName: "Blog Assignment",
+  });
+
+  await Issue.create({
+    issue_summary: "What is 2 + 4?",
+    userUsername: "Apollos",
+    projectName: "Blog Assignment",
+  });
+
+  await Issue.create({
+    issue_summary: "Details button not working",
+    userUsername: "Apollos",
+    projectName: "Blog Assignment",
+  });
 
   console.log(`seeded ${users.length} things`);
   console.log(`seeded successfully`);

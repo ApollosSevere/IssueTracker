@@ -2,10 +2,14 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 module.exports = db.define("project", {
-  project_name: {
+  name: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
+    primaryKey: true,
+  },
+  project_desc: {
+    type: Sequelize.TEXT,
   },
   start_date: {
     type: Sequelize.DATE,

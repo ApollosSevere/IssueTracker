@@ -28,6 +28,10 @@ module.exports = db.define("issue", {
     type: Sequelize.ENUM,
     values: ["Frontend", "Backend", "Customer"],
   },
+  type: {
+    type: Sequelize.ENUM,
+    values: ["Issue", "Bug", "Error", "Feature Request", "Other"],
+  },
   priority: {
     type: Sequelize.ENUM,
     values: ["Low", "Medium", "High", "Immediate"],

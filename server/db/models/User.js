@@ -11,6 +11,7 @@ const User = db.define("user", {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
+    primaryKey: true,
   },
   password: {
     type: Sequelize.STRING,
@@ -42,7 +43,7 @@ User.prototype.correctPassword = function (candidatePwd) {
 };
 
 User.prototype.generateToken = function () {
-  return jwt.sign({ id: this.id }, process.env.JWT);
+  return jwt.sign({ id: this.username }, process.env.JWT);
 };
 
 /**

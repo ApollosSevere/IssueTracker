@@ -26,7 +26,7 @@ router.post("/addproject", requireToken, async (req, res, next) => {
 
 router.put("/:projectId", requireToken, async (req, res, next) => {
   try {
-    const post = await Project.findByPk(req.params.postId);
+    const post = await Project.findByPk(req.params.projectId);
     const updatedProject = await post.update(req.body);
     res.json(updatedProject);
   } catch (error) {
@@ -36,7 +36,7 @@ router.put("/:projectId", requireToken, async (req, res, next) => {
 
 router.get("/:projectId", requireToken, async (req, res, next) => {
   try {
-    const id = req.params.postId;
+    const id = req.params.projectId;
     const result = await Project.findByPk(id);
     res.json(result);
   } catch (error) {
@@ -47,7 +47,7 @@ router.get("/:projectId", requireToken, async (req, res, next) => {
 
 router.delete("/:projectId", requireToken, async (req, res, next) => {
   try {
-    const id = req.params.postId;
+    const id = req.params.projectId;
     const post = await Project.findByPk(id);
     await post.destroy();
     res.sendStatus(200);
