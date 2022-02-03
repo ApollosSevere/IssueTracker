@@ -1,5 +1,5 @@
 const {
-  models: { Issue, User, Chore },
+  models: { Issue, User, Comment },
 } = require("../db");
 
 const router = require("express").Router();
@@ -24,6 +24,15 @@ router.post("/", requireToken, async (req, res, next) => {
   }
 });
 
+router.post("/addcomment", requireToken, async (req, res, next) => {
+  try {
+    await Comment.create(req.body);
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put("/:issueId", requireToken, async (req, res, next) => {
   try {
     const post = await Issue.findByPk(req.params.issueId);
@@ -38,7 +47,7 @@ router.get("/:issueId", async (req, res, next) => {
   try {
     const id = req.params.issueId;
     const result = await Issue.findByPk(id, {
-      include: [{ model: User, as: "assigned_users" }],
+      include: [{ model: User, as: "assigned_users" }, { model: Comment }],
     });
     res.json(result);
   } catch (error) {

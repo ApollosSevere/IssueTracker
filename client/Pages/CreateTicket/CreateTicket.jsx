@@ -62,6 +62,32 @@ export const CreateTicket = ({
         <Redirect to={`/projectDetail/${projectId}`} />
       ) : (
         <div className="write">
+          {projects ? (
+            <>
+              <div className="t-select">
+                Project:{" "}
+                <TagSelector
+                  optionSelected={projectPick}
+                  setSelected={setProjectPick}
+                  option={"project"}
+                  projects={projects}
+                />
+              </div>
+
+              <div className="t-select">
+                Type:{" "}
+                <TagSelector
+                  optionSelected={typePick}
+                  setSelected={setTypePick}
+                  option={"type"}
+                  types={types}
+                />
+              </div>
+            </>
+          ) : (
+            <>Loading...</>
+          )}
+
           <form onSubmit={(event) => handleSubmit(event)} className="writeForm">
             <div className="writeFormGroup">
               <input
@@ -96,32 +122,6 @@ export const CreateTicket = ({
               Publish
             </button>
           </form>
-
-          {projects ? (
-            <>
-              <div className="t-select">
-                Project:{" "}
-                <TagSelector
-                  optionSelected={projectPick}
-                  setSelected={setProjectPick}
-                  option={"project"}
-                  projects={projects}
-                />
-              </div>
-
-              <div className="t-select">
-                Type:{" "}
-                <TagSelector
-                  optionSelected={typePick}
-                  setSelected={setTypePick}
-                  option={"type"}
-                  types={types}
-                />
-              </div>
-            </>
-          ) : (
-            <>Loading...</>
-          )}
         </div>
       )}
     </>

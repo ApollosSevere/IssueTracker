@@ -37,6 +37,16 @@ export const addTicket = (ticketInfo) => async (dispatch) => {
   }
 };
 
+export const addComment = (commentInfo) => async (dispatch) => {
+  try {
+    await axios.post(`/api/tickets/addcomment`, commentInfo, {
+      headers: { authorization: token },
+    });
+  } catch (error) {
+    return dispatch(_setTicket({ error: error }));
+  }
+};
+
 /* REDUCER */
 export default function (state = {}, action) {
   switch (action.type) {
