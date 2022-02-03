@@ -1,5 +1,5 @@
 const {
-  models: { Issue },
+  models: { Issue, User, Chore },
 } = require("../db");
 
 const router = require("express").Router();
@@ -34,14 +34,15 @@ router.put("/:issueId", requireToken, async (req, res, next) => {
   }
 });
 
-router.get("/:issueId", requireToken, async (req, res, next) => {
+router.get("/:issueId", async (req, res, next) => {
   try {
     const id = req.params.issueId;
-    const result = await Issue.findByPk(id);
+    const result = await Issue.findByPk(id, {
+      include: [{ model: User, as: "assigned_users" }],
+    });
     res.json(result);
   } catch (error) {
     next(error);
-    // res.status(401).send("User already exists");
   }
 });
 

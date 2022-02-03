@@ -24,7 +24,9 @@ const RowItemIssue = ({ issue }) => {
   return (
     <tr>
       <td>
-        <p className="username">{issue.issue_summary}</p>
+        <Link to={`/ticketDetail/${issue.id}`}>
+          <p className="username">{issue.issue_summary}</p>
+        </Link>
       </td>
       <td>
         <p className="roleName">{issue.createdAt}</p>

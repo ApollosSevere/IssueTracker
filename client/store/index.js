@@ -5,8 +5,9 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import auth from "./auth";
 import projects from "./project";
 import users from "./users";
+import issue from "./issue";
 
-const reducer = combineReducers({ auth, projects, users });
+const reducer = combineReducers({ auth, projects, users, issue });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

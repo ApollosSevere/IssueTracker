@@ -40,7 +40,7 @@ export const addTicket = (ticketInfo) => async (dispatch) => {
 /* REDUCER */
 export default function (state = {}, action) {
   switch (action.type) {
-    case SET_AUTH:
+    case SET_TICKET:
       return action.payload;
     default:
       return state;
