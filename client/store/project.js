@@ -15,12 +15,17 @@ const _setProjects = (projects) => ({
 /** THUNK CREATORS */
 export const loadProjects = () => async (dispatch) => {
   try {
-    const { data: projects } = await axios.get("/api/projects", {
+    const { data: projectsData } = await axios.get("/api/projects", {
       headers: {
         authorization: token,
       },
     });
-    dispatch(_setProjects(projects));
+    dispatch(
+      _setProjects({
+        projects: [...projectsData.projects],
+        typeValues: projectsData.typeValues,
+      })
+    );
   } catch (err) {
     return dispatch(_setProjects({ error: err }));
   }

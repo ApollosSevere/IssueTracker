@@ -41,7 +41,7 @@ export const ProjectView = ({ projects, error }) => {
 const mapStateToProps = (state) => {
   return {
     error: state.projects.error,
-    projects: state.projects,
+    projects: state.projects.projects || [],
   };
 };
 

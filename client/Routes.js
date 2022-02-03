@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm/AuthForm";
 import ProjectDetail from "./Pages/ProjectDetail/ProjectDetail.jsx";
+import CreateTicket from "./Pages/CreateTicket/CreateTicket.jsx";
 import { me } from "./store";
 
 import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
@@ -25,6 +26,7 @@ class Routes extends Component {
             {/* For all pages: margin-right: 250px !! */}
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/projectDetail/:projectId" component={ProjectDetail} />
+            <Route path="/addticket/:projectId" component={CreateTicket} />
             <Redirect to="/dashboard" />
           </Switch>
         ) : (

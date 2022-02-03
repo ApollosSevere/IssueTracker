@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import { fetchProjectUsers } from "../../store/users";
 
@@ -24,13 +24,15 @@ const RowItemIssue = ({ issue }) => {
   return (
     <tr>
       <td>
-        <p className="username">{user.summary}</p>
+        <p className="username">{issue.issue_summary}</p>
       </td>
       <td>
-        <p className="roleName">{user.createdAt}</p>
+        <p className="roleName">{issue.createdAt}</p>
       </td>
       <td>
-        <p className="email">{user.email}</p>
+        <p className="email">
+          | {issue.assigned_users.map((v) => v.username).join(", ")} |
+        </p>
       </td>
     </tr>
   );
@@ -98,6 +100,10 @@ export const ProjectDetail = ({ projectData, getProjectUsers, userId }) => {
 
       <div className="pd-tickets">
         <h3 className="pd-title">Project Tickets</h3>
+
+        {/* Turn Add Ticket page into a Modal Later!! */}
+        <Link to={`/addticket/${projectId}`}>Create New</Link>
+
         <table className="pd-issuesTable">
           <thead>
             <tr>

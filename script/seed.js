@@ -154,6 +154,12 @@ async function seed() {
 
   await Chore.create({
     start_date: new Date(),
+    assigned_user: "Chuck",
+    issueId: 2,
+  });
+
+  await Chore.create({
+    start_date: new Date(),
     assigned_user: "Haddassah",
     issueId: 1,
   });

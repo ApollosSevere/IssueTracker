@@ -1,15 +1,16 @@
 const {
-  models: { Project },
+  models: { Project, Issue },
 } = require("../db");
 
 const router = require("express").Router();
 const { requireToken } = require("./middleware");
 
-router.get("/", requireToken, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const projects = await Project.findAll();
     // await Project.create(req.body);
-    res.status(200).json(projects);
+    const typeValues = Issue.rawAttributes.type.values;
+    res.status(200).json({ projects: [...projects], typeValues });
   } catch (error) {
     next(error);
   }

@@ -18,12 +18,22 @@ const _setTicket = (ticket) => ({
 
 export const fetchTicket = (ticketId) => async (dispatch) => {
   try {
-    const { data: ticket } = await axios.get(`/auth/${ticketId}`, {
+    const { data: ticket } = await axios.get(`/api/tickets/${ticketId}`, {
       headers: { authorization: token },
     });
     dispatch(_setTicket(ticket));
   } catch (error) {
-    return dispatch(setAuth({ error: error }));
+    return dispatch(_setTicket({ error: error }));
+  }
+};
+
+export const addTicket = (ticketInfo) => async (dispatch) => {
+  try {
+    await axios.post(`/api/tickets`, ticketInfo, {
+      headers: { authorization: token },
+    });
+  } catch (error) {
+    return dispatch(_setTicket({ error: error }));
   }
 };
 
