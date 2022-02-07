@@ -27,6 +27,22 @@ export const fetchTicket = (ticketId) => async (dispatch) => {
   }
 };
 
+export const manageTicket =
+  (ticketId, updatedObj, userType) => async (dispatch) => {
+    try {
+      const { data: updatedTicket } = await axios.put(
+        `/api/tickets/${userType}/${ticketId}`,
+        updatedObj,
+        {
+          headers: { authorization: token },
+        }
+      );
+      dispatch(_setTicket(updatedTicket));
+    } catch (error) {
+      return dispatch(_setTicket({ error: error }));
+    }
+  };
+
 export const addTicket = (ticketInfo) => async (dispatch) => {
   try {
     await axios.post(`/api/tickets`, ticketInfo, {

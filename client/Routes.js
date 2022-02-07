@@ -8,6 +8,7 @@ import { me } from "./store";
 
 import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
 import TicketDetail from "./Pages/TicketDetail/TicketDetail.jsx";
+import ManageTicket from "./Pages/ManageTicket/ManageTicket.jsx";
 
 /* COMPONENT */
 class Routes extends Component {
@@ -29,6 +30,7 @@ class Routes extends Component {
             <Route path="/projectDetail/:projectId" component={ProjectDetail} />
             <Route path="/addticket/:projectId" component={CreateTicket} />
             <Route path="/ticketDetail/:ticketId" component={TicketDetail} />
+            <Route path="/manageTicket/:ticketId" component={ManageTicket} />
             <Redirect to="/dashboard" />
           </Switch>
         ) : (

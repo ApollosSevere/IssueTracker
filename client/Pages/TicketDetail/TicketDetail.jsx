@@ -6,7 +6,7 @@ import { fetchTicket } from "../../store/issue";
 import { fetchProjectUsers } from "../../store/users";
 import { addComment } from "../../store/issue";
 
-export const ProjectDetail = ({
+export const TicketDetail = ({
   projectData,
   getProjectUsers,
   getTickets,
@@ -74,7 +74,7 @@ export const ProjectDetail = ({
 
   useEffect(() => {
     try {
-      //   getProjectUsers(projectId, userId);
+      //   getProjectUsers(projectId);
       getTickets(ticketId);
     } catch (error) {
       console.log(error);
@@ -103,7 +103,7 @@ export const ProjectDetail = ({
             assigned_users.map((user) => user.username).join(", ")) ||
             "...."}
         </p>
-        <Link to={`/updateTicket/${ticketId}`}>Edit</Link>
+        <Link to={`/manageTicket/${ticketId}`}>Manage</Link>
       </div>
       <p className="td-name">Priority: {priority || "Undecided"}</p>
       <p className="td-name">Type: {type || "loading"}</p>
@@ -142,9 +142,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getTickets: (ticketId) => dispatch(fetchTicket(ticketId)),
-  getProjectUsers: (projectId, userId) =>
-    dispatch(fetchProjectUsers(projectId, userId)),
+  // getProjectUsers: (projectId) => dispatch(fetchProjectUsers(projectId)),
   submitComment: (commentInfo) => dispatch(addComment(commentInfo)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(TicketDetail);

@@ -5,6 +5,7 @@ import { Redirect, useParams } from "react-router-dom";
 // Redux Functions
 import { addTicket } from "../../store/issue";
 import { loadProjects } from "../../store/project";
+import { loadAttributes } from "../../store/fliedAttributes";
 
 // Components
 import TagSelector from "../../components/utils/TagSelector.jsx";
@@ -13,8 +14,9 @@ export const CreateTicket = ({
   getProjects,
   submitTicket,
   username,
-  types,
   projects,
+  getAttributes,
+  fliedAttributes,
 }) => {
   const [projectPick, setProjectPick] = useState([]);
   const [typePick, setTypePick] = useState([]);
@@ -23,10 +25,12 @@ export const CreateTicket = ({
 
   const { projectId } = useParams();
 
-  console.log(projectId, "id------");
+  // console.log(fliedValues, "id------");
 
   useEffect(() => {
     try {
+      console.log("on me");
+      getAttributes();
       getProjects();
     } catch (error) {
       console.log(error);
@@ -43,6 +47,7 @@ export const CreateTicket = ({
         projectName: projectPicked,
         type: typePicked,
         submitter_username: username,
+        status: "Unassigned",
       });
 
       await getProjects();
@@ -62,15 +67,14 @@ export const CreateTicket = ({
         <Redirect to={`/projectDetail/${projectId}`} />
       ) : (
         <div className="write">
-          {projects ? (
+          {projects.length > 0 ? (
             <>
               <div className="t-select">
                 Project:{" "}
                 <TagSelector
                   optionSelected={projectPick}
                   setSelected={setProjectPick}
-                  option={"project"}
-                  projects={projects}
+                  option={projects}
                 />
               </div>
 
@@ -79,8 +83,7 @@ export const CreateTicket = ({
                 <TagSelector
                   optionSelected={typePick}
                   setSelected={setTypePick}
-                  option={"type"}
-                  types={types}
+                  option={fliedAttributes.type || []}
                 />
               </div>
             </>
@@ -131,14 +134,15 @@ export const CreateTicket = ({
 const mapStateToProps = (state) => {
   return {
     username: state.auth.username,
-    projects: state.projects.projects || [],
-    types: state.projects.typeValues || [],
+    projects: state.projects || [],
+    fliedAttributes: state.fliedAttributes,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     submitTicket: (ticketInfo) => dispatch(addTicket(ticketInfo)),
+    getAttributes: () => dispatch(loadAttributes()),
     getProjects: () => {
       dispatch(loadProjects());
     },

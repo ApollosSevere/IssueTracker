@@ -12,13 +12,13 @@ module.exports = db.define("issue", {
   issue_description: {
     type: Sequelize.STRING,
   },
-  start_date: {
+  target_start_date: {
     type: Sequelize.DATE,
   },
   target_end_date: {
     type: Sequelize.DATE,
   },
-  actual_end_date: {
+  actual_start_date: {
     type: Sequelize.DATE,
   },
   actual_resolution_date: {
@@ -51,6 +51,13 @@ module.exports = db.define("issue", {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ["Open", "Resolved", "In Progress", "Additional Info Required"],
+    values: [
+      "Open",
+      "Resolved",
+      "In Progress",
+      "Additional Info Required",
+      "Overdue",
+      "Unassigned",
+    ],
   },
 });

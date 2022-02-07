@@ -6,8 +6,15 @@ import auth from "./auth";
 import projects from "./project";
 import users from "./users";
 import issue from "./issue";
+import fliedAttributes from "./fliedAttributes";
 
-const reducer = combineReducers({ auth, projects, users, issue });
+const reducer = combineReducers({
+  auth,
+  projects,
+  users,
+  issue,
+  fliedAttributes,
+});
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

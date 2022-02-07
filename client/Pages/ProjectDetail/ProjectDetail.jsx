@@ -72,7 +72,7 @@ export const ProjectDetail = ({ projectData, getProjectUsers, userId }) => {
 
   useEffect(() => {
     try {
-      getProjectUsers(projectId, userId);
+      getProjectUsers(projectId);
     } catch (error) {
       console.log(error);
     }
@@ -128,8 +128,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getProjectUsers: (projectId, userId) =>
-    dispatch(fetchProjectUsers(projectId, userId)),
+  getProjectUsers: (projectId) => dispatch(fetchProjectUsers(projectId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetail);

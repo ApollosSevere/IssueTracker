@@ -37,6 +37,9 @@ Issue.belongsTo(User, {
 Project.hasMany(Issue);
 Issue.belongsTo(Project);
 
+Project.hasMany(Chore);
+Chore.belongsTo(Project);
+
 User.hasMany(Comment, {
   foreignKey: "commenter_username",
 });

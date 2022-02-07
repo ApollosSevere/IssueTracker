@@ -12,12 +12,11 @@ const setUsers = (users) => {
   };
 };
 
-export const fetchProjectUsers = (projectId, userId) => {
+export const fetchProjectUsers = (projectId) => {
   return async (dispatch) => {
     try {
       const { data: users } = await axios.get(
         `/api/users/assigned/${projectId}`,
-        { userId },
         {
           headers: {
             authorization: token,

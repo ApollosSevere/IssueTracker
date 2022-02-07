@@ -19,34 +19,12 @@ const Option = (props) => {
 
 /* Later, **Maybe Import all important dependencies through redux and useEffect */
 
-function TagSelector({
-  optionSelected,
-  setSelected,
-  option,
-  projects,
-  developers,
-  multi,
-  types,
-  priorities,
-  status,
-}) {
+function TagSelector({ optionSelected, setSelected, option, multi }) {
   const formatOptions = (arr) =>
     arr.map((item) => ({
-      value: item.name || item,
-      label: item.name || item,
+      value: item.username || item.name || item,
+      label: item.username || item.name || item,
     }));
-
-  const tagOptions = {
-    // Values Submitters can access
-    type: () => formatOptions(types),
-    // project: () => formatOptions(projects),
-    project: () => formatOptions(projects),
-
-    // Values PM + Developers can access
-    priority: () => formatOptions(priorities),
-    status: () => formatOptions(status),
-    developers: () => formatOptions(developers),
-  };
 
   const handleChange = (selected) => {
     setSelected(selected);
@@ -62,7 +40,7 @@ function TagSelector({
       >
         <ReactSelect
           isMulti={multi}
-          options={tagOptions[option]()}
+          options={formatOptions(option)}
           allowSelectAll={true}
           value={optionSelected}
           onChange={handleChange}

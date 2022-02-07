@@ -148,19 +148,19 @@ async function seed() {
 
   await Chore.create({
     start_date: new Date(),
-    assigned_user: "Alexandria",
+    assigned_user: "Bob",
     issueId: 1,
   });
 
   await Chore.create({
     start_date: new Date(),
-    assigned_user: "Chuck",
+    assigned_user: "Melani",
     issueId: 2,
   });
 
   await Chore.create({
     start_date: new Date(),
-    assigned_user: "Haddassah",
+    assigned_user: "Melani",
     issueId: 1,
   });
 
@@ -168,6 +168,7 @@ async function seed() {
     start_date: new Date(),
     assigned_user: "Alexandria",
     issueId: 3,
+    projectName: "Blog Assignment",
   });
 
   await Chore.create({

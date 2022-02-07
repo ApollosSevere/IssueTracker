@@ -4,24 +4,23 @@ const TOKEN = "token";
 const token = window.localStorage.getItem(TOKEN);
 
 /** ACTION TYPES */
-const SET_PROJECTS = "SET_PROJECTS";
+const SET_FLIED_ATTRIBUTES = "SET_FLIED_ATTRIBUTES";
 
 /** ACTION CREATORS */
-const _setProjects = (projects) => ({
-  type: SET_PROJECTS,
-  payload: projects,
+const _setFields = (attributes) => ({
+  type: SET_FLIED_ATTRIBUTES,
+  payload: attributes,
 });
 
 /** THUNK CREATORS */
-export const loadProjects = () => async (dispatch) => {
+export const loadAttributes = () => async (dispatch) => {
   try {
-    const { data: projectsData } = await axios.get("/api/projects", {
+    const { data: attributeData } = await axios.get("/api/tickets/attributes", {
       headers: {
         authorization: token,
       },
     });
-    console.log(projectsData);
-    dispatch(_setProjects(projectsData));
+    dispatch(_setFields(attributeData));
   } catch (err) {
     return dispatch(_setProjects({ error: err }));
   }
@@ -30,7 +29,7 @@ export const loadProjects = () => async (dispatch) => {
 /* REDUCER */
 export default function (state = {}, action) {
   switch (action.type) {
-    case SET_PROJECTS:
+    case SET_FLIED_ATTRIBUTES:
       return action.payload;
     default:
       return state;

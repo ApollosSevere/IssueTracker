@@ -1,5 +1,5 @@
 const {
-  models: { Issue, User, Comment },
+  models: { Issue, User, Comment, Chore },
 } = require("../db");
 
 const router = require("express").Router();
@@ -10,6 +10,19 @@ router.get("/", requireToken, async (req, res, next) => {
     const issue = await Issue.findAll();
     // await Issue.create(req.body);
     res.status(200).json(issue);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/attributes", requireToken, async (req, res, next) => {
+  try {
+    const fliedAttributes = {
+      type: await Issue.rawAttributes.type.values,
+      priority: await Issue.rawAttributes.priority.values,
+    };
+
+    res.status(200).json(fliedAttributes);
   } catch (error) {
     next(error);
   }
@@ -33,11 +46,27 @@ router.post("/addcomment", requireToken, async (req, res, next) => {
   }
 });
 
-router.put("/:issueId", requireToken, async (req, res, next) => {
+router.put("/owner/:issueId", requireToken, async (req, res, next) => {
   try {
     const post = await Issue.findByPk(req.params.issueId);
     const updatedIssue = await post.update(req.body);
     res.json(updatedIssue);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/manager/:issueId", requireToken, async (req, res, next) => {
+  try {
+    // const issue = await Issue.findByPk(req.params.issueId);
+    // const updatedIssue = await issue.update(req.body);
+
+    console.log(req.body);
+
+    // await Chore.create(req.body.choreInfo);
+
+    // await Notification.create(req.body) Make this later!
+    // res.json(updatedIssue);
   } catch (error) {
     next(error);
   }

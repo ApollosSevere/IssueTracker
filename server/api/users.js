@@ -21,7 +21,6 @@ router.get("/", async (req, res, next) => {
 router.get("/assigned/:projectId", async (req, res, next) => {
   try {
     const project_name = req.params.projectId;
-    const { userId } = req.body; // This slice needs clean up!!
 
     const projectData = await Project.findOne({
       where: { name: project_name },

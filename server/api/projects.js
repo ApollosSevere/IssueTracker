@@ -8,9 +8,8 @@ const { requireToken } = require("./middleware");
 router.get("/", async (req, res, next) => {
   try {
     const projects = await Project.findAll();
-    // await Project.create(req.body);
-    const typeValues = Issue.rawAttributes.type.values;
-    res.status(200).json({ projects: [...projects], typeValues });
+
+    res.status(200).json(projects);
   } catch (error) {
     next(error);
   }
