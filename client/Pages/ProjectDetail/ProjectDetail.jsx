@@ -44,6 +44,13 @@ export const ProjectDetail = ({ projectData, getProjectUsers, userId }) => {
   const { projectId } = useParams();
   const info = projectData ? projectData : "Loading ..";
 
+  const sortIssue = (array) =>
+    array.sort(function (a, b) {
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    });
+
   const rowData =
     Object.keys(projectData).length > 0 ? (
       projectData.users.map((user) => (
@@ -59,7 +66,7 @@ export const ProjectDetail = ({ projectData, getProjectUsers, userId }) => {
 
   const rowDataIssues =
     Object.keys(projectData).length > 0 ? (
-      projectData.issues.map((issue) => (
+      sortIssue(projectData.issues).map((issue) => (
         <RowItemIssue key={issue.id} issue={issue} />
       ))
     ) : (

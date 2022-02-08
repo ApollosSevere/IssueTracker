@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User, Role, Assignment, Project, Issue },
+  models: { User, Role, Assignment, Project, Issue, Chore },
 } = require("../db");
 module.exports = router;
 
@@ -39,17 +39,20 @@ router.get("/assigned/:projectId", async (req, res, next) => {
 
         {
           model: Issue,
-          include: {
-            model: User,
-            as: "assigned_users",
-            // attributes: [
-            //   "username",
-            //   "first_name",
-            //   "last_name",
-            //   "email",
-            //   "roleName",
-            // ],
-          },
+
+          include: [
+            {
+              model: User,
+              as: "assigned_users",
+              // attributes: [
+              //   "username",
+              //   "first_name",
+              //   "last_name",
+              //   "email",
+              //   "roleName",
+              // ],
+            },
+          ],
         },
       ],
     });

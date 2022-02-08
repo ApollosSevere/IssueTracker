@@ -61,12 +61,53 @@ router.put("/manager/:issueId", requireToken, async (req, res, next) => {
     // const issue = await Issue.findByPk(req.params.issueId);
     // const updatedIssue = await issue.update(req.body);
 
+    const {
+      notes,
+      usersToAdd,
+      issueId,
+      usersToRemove,
+      startDate,
+      endDate,
+      priority,
+      projectName,
+      timeEstimate,
+    } = req.body;
+
+    if (usersToAdd.length > 0) {
+      const updatedChores = usersToAdd.map(
+        async (user) =>
+          await Chore.create({
+            notes,
+            assigned_user: user,
+            issueId,
+            projectName,
+          })
+      );
+    }
+
+    if (usersToRemove.length > 0) {
+      const updatedChores = usersToRemove.map(async (user) => {
+        const chore = await Chore.findAll({ where: { issueId } });
+        await chore[0].destroy();
+      });
+    }
+
     console.log(req.body);
 
     // await Chore.create(req.body.choreInfo);
 
+    const issue = await Issue.findByPk(issueId);
+
+    const updatedIssue = await issue.update({
+      target_start_date: startDate,
+      target_end_date: endDate,
+      time_estimate: timeEstimate,
+      priority,
+      status: "Open",
+    });
+
     // await Notification.create(req.body) Make this later!
-    // res.json(updatedIssue);
+    res.json(updatedIssue);
   } catch (error) {
     next(error);
   }

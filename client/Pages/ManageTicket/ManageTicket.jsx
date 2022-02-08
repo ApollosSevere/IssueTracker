@@ -23,12 +23,14 @@ const ManageTicket = ({
 }) => {
   const { ticketId } = useParams();
   //   const info = projectData ? projectData : "Loading ..";
+
   const {
     id,
     title,
     issue_summary,
     issue_description,
     target_end_date,
+    target_start_date,
     status,
     priority,
     type,
@@ -43,24 +45,25 @@ const ManageTicket = ({
   } = ticketData;
 
   const [formData, setFormData] = useState({ notes: "" });
-  const [priorityPick, setPriorityPick] = useState([]);
+  const [priorityPick, setPriorityPick] = useState();
   const [addUsersPick, setAddUsersPick] = useState([]);
   const [removeUsersPick, setRemoveUsersPick] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
-  const [timeEstimate, setTimeEstimate] = useState(0);
+  const [timeEstimate, setTimeEstimate] = useState();
 
   console.log(currentAssignedUsers);
 
   const assignedUsernames =
     currentAssignedUsers && currentAssignedUsers.map((v) => v.username);
 
-  const unassignedUsers = allProjectUsers.users
-    ? allProjectUsers.users.filter(
-        (v) => !assignedUsernames.includes(v.username)
-      )
-    : [];
+  const unassignedUsers =
+    allProjectUsers.users && assignedUsernames
+      ? allProjectUsers.users.filter(
+          (v) => !assignedUsernames.includes(v.username)
+        )
+      : [];
 
   const commentView =
     comments &&
@@ -85,11 +88,14 @@ const ManageTicket = ({
         ticketId,
         {
           ...formData,
+          endDate,
+          startDate,
+          issueId: id,
+          projectName,
+          timeEstimate,
+          priority: priorityPick.value,
           usersToAdd: addUsersPick.map((v) => v.value),
           usersToRemove: removeUsersPick.map((v) => v.value),
-          startDate,
-          endDate,
-          priority: priorityPick.map((v) => v.value),
         },
         "manager"
       );
@@ -112,6 +118,21 @@ const ManageTicket = ({
       console.log(error);
     }
   }, [projectName]);
+
+  useEffect(() => {
+    try {
+      setStartDate(
+        target_start_date ? new Date(target_start_date) : new Date()
+      );
+      setEndDate(target_end_date ? new Date(target_end_date) : new Date());
+      setTimeEstimate(time_estimate ? time_estimate : 0);
+      setPriorityPick(
+        priority ? { value: priority, label: priority } : priority
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, [target_end_date]);
 
   return (
     <div className="td">
@@ -211,6 +232,7 @@ const ManageTicket = ({
         className="yo"
       >
         <p>Set Priority: </p>
+        {console.log(priorityPick)}
         <div style={{ width: "200px" }}>
           <TagSelector
             optionSelected={priorityPick}
@@ -231,7 +253,7 @@ const ManageTicket = ({
         className="hey"
       >
         <div style={{ width: "250px" }} className="right">
-          <h3>Assign Users</h3>
+          <h3>Add Users</h3>
           <TagSelector
             optionSelected={addUsersPick}
             setSelected={setAddUsersPick}
