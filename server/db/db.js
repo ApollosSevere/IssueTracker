@@ -9,10 +9,10 @@ const config = {
 };
 
 const dbConfig = {
-  HOST: process.env.HOST || "localhost",
-  USER: process.env.USER || "postgres",
-  PASSWORD: process.env.PASSWORD || "1234",
-  DB: process.env.DATABASE_URL || "issuetracker",
+  HOST: "localhost",
+  USER: "postgres",
+  PASSWORD: "1234",
+  DB: "issuetracker",
   dialect: "postgres",
   pool: {
     max: 5,
