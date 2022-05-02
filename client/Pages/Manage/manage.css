@@ -3,6 +3,14 @@
   padding: 0.25rem !important;
 }
 
+.active-nav {
+  /* background-color: white; */
+}
+
+.nav-item {
+  /* background-color: #f8f9fa; */
+}
+
 .css-1s2u09g-control {
   width: 100%;
 }
@@ -11,13 +19,17 @@
   width: 100%;
 }
 
+
 .nav-pills .nav-link {
+  /* padding: inherit !important; */
   color: inherit !important;
   font-weight: 500;
   font-size: inherit !important;
+  /* box-shadow: inherit !important; */
   background-color: #fff;
   transition: all 0.15s ease;
 }
+
 
 .nav-pills .nav-item{
   margin-bottom: 0 !important;
@@ -26,4 +38,5 @@
 .avatar-reg {
  width: 130px;
  height: 130px;
+ 
 }
