@@ -36,7 +36,7 @@ if (process.env.DATABASE_URL) {
 
 const db = process.env.DATABASE_URL
   ? new Sequelize(
-      process.env.DATABASE || `postgres://localhost:5432/${databaseName}`,
+      process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
       config
     )
   : new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
