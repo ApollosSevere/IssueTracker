@@ -53,6 +53,7 @@ export const TicketDetail = ({
     issue_summary,
     target_end_date,
     issue_description,
+    submitter_username,
     updatedAt: lastUpdate,
   } = ticketData;
 
