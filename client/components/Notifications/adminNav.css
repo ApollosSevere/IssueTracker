@@ -1,0 +1,54 @@
+.notifications .dropdown-item {
+  border-radius: 10px;
+  margin: 5px auto;
+  width: 90%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  width: 95%;
+  padding: 0 !important;
+  position: relative;
+}
+
+.drop-item {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 200px;
+}
+
+.notifications .dropdown-item .avatar {
+  margin-right: 15px;
+}
+
+
+.notifications {
+  z-index: 1;
+  display: block;
+}
+.custom-link {
+}
+
+.delete-icon {
+  color: gray;
+  background: #dddedf;
+  height: 100%;
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  /* margin-left: 30%; */
+  left: 90%;
+  margin-right: 80px;
+  top:0;
+  overflow: hidden;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.nav {
+  gap: 10px;
+}
+

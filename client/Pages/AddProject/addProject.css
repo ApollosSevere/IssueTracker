@@ -1,0 +1,13 @@
+.date-input input{
+    width: 90%;
+}
+
+.react-datepicker__input-container{
+    display: flex;
+    justify-content: center;
+}
+
+.thead-light td{
+    justify-content: center;
+    display: flex
+}

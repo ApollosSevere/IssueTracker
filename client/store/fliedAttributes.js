@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const TOKEN = "token";
-const token = window.localStorage.getItem(TOKEN);
 
 /** ACTION TYPES */
 const SET_FLIED_ATTRIBUTES = "SET_FLIED_ATTRIBUTES";
@@ -15,6 +14,7 @@ const _setFields = (attributes) => ({
 /** THUNK CREATORS */
 export const loadAttributes = () => async (dispatch) => {
   try {
+    const token = window.localStorage.getItem(TOKEN);
     const { data: attributeData } = await axios.get("/api/tickets/attributes", {
       headers: {
         authorization: token,

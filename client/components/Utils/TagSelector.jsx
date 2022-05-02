@@ -1,6 +1,8 @@
 import React from "react";
-import { default as ReactSelect } from "react-select";
+
+// Modules/Libraries
 import { components } from "react-select";
+import { default as ReactSelect } from "react-select";
 
 const Option = (props) => {
   return (
@@ -17,8 +19,6 @@ const Option = (props) => {
   );
 };
 
-/* Later, **Maybe Import all important dependencies through redux and useEffect */
-
 function TagSelector({ optionSelected, setSelected, option, multi }) {
   const formatOptions = (arr) =>
     arr.map((item) => ({
@@ -31,9 +31,8 @@ function TagSelector({ optionSelected, setSelected, option, multi }) {
   };
 
   return (
-    <div className="selector" style={{ maxWidth: "400px", margin: "0 auto" }}>
+    <div className="selector" style={{ width: "100%", margin: "0 auto" }}>
       <span
-        className="d-inline-block"
         data-toggle="popover"
         data-trigger="focus"
         data-content="Please select account(s)"

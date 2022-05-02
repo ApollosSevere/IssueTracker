@@ -13,6 +13,36 @@ const requireToken = async (req, res, next) => {
   }
 };
 
+const canAccess = (req, res, next) => {
+  const user = req.user;
+  if (user.roleName === "Admin" || user.roleName === "Master") {
+    next();
+  } else {
+    return res.status(403).send("Unauthorized access");
+  }
+};
+
+const isDeveloper = (req, res, next) => {
+  const user = req.user;
+  if (user.roleName === "Developer" || user.roleName === "Master") {
+    next();
+  } else {
+    return res.status(403).send("Unauthorized access");
+  }
+};
+
+const isProjectManager = (req, res, next) => {
+  const user = req.user;
+  if (user.roleName === "Project Manager" || user.roleName === "Master") {
+    next();
+  } else {
+    return res.status(403).send("Unauthorized access");
+  }
+};
+
 module.exports = {
   requireToken,
+  canAccess,
+  isDeveloper,
+  isProjectManager,
 };

@@ -1,0 +1,34 @@
+.ticketRow:hover {
+  background-color: #1592ee;
+  color: #f8fbfd;
+  cursor: pointer;
+}
+
+.listItem:hover {
+  background-color: #f4f5f7;
+  color: black;
+  cursor: pointer;
+}
+
+.custom-card {
+  height: 500px;
+}
+
+.custom-card-2 {
+  height: 73vh;
+}
+
+.table-responsive {
+  height: 100%;
+}
+
+.custom-card-3 {
+  height: 90vh;
+}
+.custom-card-4 {
+  height: 450px;
+}
+
+.input-group-prepend .btn, .input-group-append .btn{
+  z-index: 0 !important;
+}

@@ -2,6 +2,10 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 module.exports = db.define("history", {
+  title: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+  },
   summary: {
     type: Sequelize.TEXT,
     allowNull: false,

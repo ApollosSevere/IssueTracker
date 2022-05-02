@@ -23,4 +23,10 @@ module.exports = db.define("project", {
     type: Sequelize.DATE,
     allowNull: true,
   },
+  image: {
+    type: Sequelize.STRING,
+  },
+  image_location: {
+    type: Sequelize.STRING,
+  },
 });

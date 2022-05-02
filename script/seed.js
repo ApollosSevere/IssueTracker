@@ -22,51 +22,175 @@ async function seed() {
     }),
     Role.create({ name: "Developer", role_desc: "Writes Code" }),
     Role.create({ name: "Submitter", role_desc: "Complainer" }),
+    Role.create({
+      name: "Master",
+      role_desc: "Has Access to all features of application",
+    }),
 
     User.create({
       username: "cody",
       password: "123",
       email: "safadsapollos@gmail.com",
+      phone_number: 2677284756,
+      // roleName: "Master",
+      roleName: "Submitter",
+      // roleName: "Project Manager",
+      // roleName: "Developer",
+      // roleName: "Admin",
+      image_location: "../../assets/img/theme/team-3-800x800.jpg",
     }),
     User.create({
       username: "Apollos",
       password: "123",
-      roleName: "Admin",
+      roleName: "Master",
+      // roleName: "Submitter",
+      // roleName: "Project Manager",
+      // roleName: "Developer",
+      // roleName: "Admin",
       email: "severeapollos@gmail.com",
+      phone_number: 2672837463,
+      image_location: "../../assets/img/theme/apollo_headshot.jpeg",
     }),
     User.create({
-      username: "Alexandria",
+      username: "Megan",
       password: "123",
       email: "sdfallos@gmail.com",
+      // roleName: "Master",
+      // roleName: "Submitter",
+      roleName: "Project Manager",
+      // roleName: "Developer",
+      // roleName: "Admin",
+      phone_number: 2677567294,
+      image_location: "../../assets/img/theme/team-4-800x800.jpg",
     }),
     User.create({
       username: "Haddassah",
       password: "123",
       email: "dadfad@gmail.com",
+      phone_number: 2673057562,
+      // roleName: "Master",
+      // roleName: "Submitter",
+      // roleName: "Project Manager",
+      roleName: "Developer",
+      // roleName: "Admin",
+      image_location: "../../assets/img/theme/team-2-800x800.jpg",
     }),
     User.create({
       username: "Chuck",
       password: "123",
       email: "sdsadsdlos@gmail.com",
+      // roleName: "Master",
+      // roleName: "Submitter",
+      // roleName: "Project Manager",
+      roleName: "Developer",
+      // roleName: "Admin",
+      phone_number: 26792834636,
     }),
     User.create({
       username: "Melani",
       password: "123",
       email: "sedjaksldjas@gmail.com",
+      phone_number: 2679573637,
+      // roleName: "Master",
+      roleName: "Submitter",
+      // roleName: "Project Manager",
+      // roleName: "Developer",
+      // roleName: "Admin",
+      image_location: "../../assets/img/theme/team-1-800x800.jpg",
     }),
-    User.create({ username: "Bob", password: "123", email: "sevffjadal.com" }),
+    User.create({
+      username: "Bob",
+      password: "123",
+      email: "sevffjadal.com",
+      phone_number: 2679876534,
+      roleName: "Developer",
+    }),
+
+    // For Live Demo Purposes:
+    User.create({
+      username: "Master (Demo)",
+      password: "123",
+      email: "master@gmail.com",
+      phone_number: 2673057562,
+      roleName: "Master",
+      // roleName: "Submitter",
+      // roleName: "Project Manager",
+      // roleName: "Developer",
+      // roleName: "Admin",
+    }),
+    User.create({
+      username: "Admin (Demo)",
+      password: "123",
+      email: "Admin@gmail.com",
+      phone_number: 2673057562,
+      // roleName: "Master",
+      // roleName: "Submitter",
+      // roleName: "Project Manager",
+      // roleName: "Developer",
+      roleName: "Admin",
+    }),
+    User.create({
+      username: "Project Manager (Demo)",
+      password: "123",
+      email: "project_managerr@gmail.com",
+      phone_number: 2673057562,
+      // roleName: "Master",
+      // roleName: "Submitter",
+      roleName: "Project Manager",
+      // roleName: "Developer",
+      // roleName: "Admin",
+    }),
+    User.create({
+      username: "Developer (Demo)",
+      password: "123",
+      email: "developer@gmail.com",
+      phone_number: 2673057562,
+      // roleName: "Master",
+      // roleName: "Submitter",
+      // roleName: "Project Manager",
+      roleName: "Developer",
+      // roleName: "Admin",
+    }),
+    User.create({
+      username: "Submitter (Demo)",
+      password: "123",
+      email: "submitter@gmail.com",
+      phone_number: 2673057562,
+      // roleName: "Master",
+      roleName: "Submitter",
+      // roleName: "Project Manager",
+      // roleName: "Developer",
+      // roleName: "Admin",
+    }),
+
     Project.create({
       name: "Blog Assignment",
       project_desc:
         "This is a platform where users can share their brilliant ideas!",
       start_date: new Date(),
       target_end_date: new Date(),
+      image_location: "../../assets/img/theme/blogAssignment.jpg",
     }),
     Project.create({
       name: "Fresh",
       project_desc: "Food/Pantry management system!",
       start_date: new Date(),
       target_end_date: new Date(),
+      image_location: "../../assets/img/theme/freshLogo.png",
+    }),
+    Project.create({
+      name: "Apollos Electro Store",
+      project_desc: "Robust E-commerce Website",
+      start_date: new Date(),
+      target_end_date: new Date(),
+      image_location: "../../assets/img/theme/electroStore.webp",
+    }),
+    Project.create({
+      name: "Bug Tracker",
+      project_desc: "Helps Manage Large Applications",
+      start_date: new Date(),
+      target_end_date: new Date(),
+      image_location: "../../favicon.ico",
     }),
   ]);
 
@@ -80,7 +204,7 @@ async function seed() {
       projectName: "Fresh",
     }),
     await Assignment.create({
-      userUsername: "Alexandria",
+      userUsername: "Megan",
       projectName: "Fresh",
     }),
     await Assignment.create({
@@ -112,38 +236,63 @@ async function seed() {
 
     await Issue.create({
       issue_summary: "Testing Issue...",
+      type: "Bug",
+      status: "Open",
       submitter_username: "Bob",
       projectName: "Blog Assignment",
+      issue_description:
+        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum ",
     });
 
   await Issue.create({
     issue_summary: "Header link not working",
+    type: "Feature Request",
+    status: "Resolved",
     submitter_username: "Apollos",
     projectName: "Blog Assignment",
+    issue_description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum ",
   });
 
   await Issue.create({
     issue_summary: "We need more juice",
+    type: "Service Request",
+    status: "Resolved",
     submitter_username: "Apollos",
     projectName: "Blog Assignment",
+    issue_description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum ",
   });
 
   await Issue.create({
     issue_summary: "I have to go to jazz class",
+    status: "Open",
+    priority: "High",
+    type: "Other",
     submitter_username: "Apollos",
     projectName: "Blog Assignment",
+    issue_description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum ",
   });
 
   await Issue.create({
     issue_summary: "What is 2 + 4?",
+    status: "Resolved",
+    type: "Error",
     submitter_username: "Apollos",
     projectName: "Blog Assignment",
+    issue_description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum ",
   });
 
   await Issue.create({
     issue_summary: "Details button not working",
     submitter_username: "Apollos",
+    type: "Feature Request",
+    status: "Resolved",
     projectName: "Blog Assignment",
+    issue_description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum ",
   });
 
   await Chore.create({
@@ -166,7 +315,7 @@ async function seed() {
 
   await Chore.create({
     start_date: new Date(),
-    assigned_user: "Alexandria",
+    assigned_user: "Megan",
     issueId: 3,
     projectName: "Blog Assignment",
   });
@@ -187,11 +336,14 @@ async function seed() {
     start_date: new Date(),
     assigned_user: "Apollos",
     issueId: 1,
+    notes:
+      "The first thing I need you to do is get what you need from the store then come back with the stuff that you need to get in the other place, and yeah yeah yeah then I need you to go to the place to grab what you need",
   });
   await Chore.create({
     start_date: new Date(),
     assigned_user: "Apollos",
     issueId: 6,
+    notes: "I need you to make the blah blah yo yo pronto",
   });
 
   console.log(`seeded ${users.length} things`);

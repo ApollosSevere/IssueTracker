@@ -9,6 +9,7 @@ const Assignment = require("./models/Assignment");
 const History = require("./models/History");
 const Project = require("./models/Project");
 const Comment = require("./models/Comment");
+const Notification = require("./models/Notification");
 
 // *** Associations could go here! ***//
 User.belongsToMany(Project, { through: Assignment });
@@ -61,6 +62,18 @@ User.belongsTo(Role, {
   },
 });
 
+User.hasMany(Notification);
+Notification.belongsTo(User);
+
+Issue.hasMany(Notification);
+Notification.belongsTo(Issue);
+
+Project.hasMany(Notification);
+Notification.belongsTo(Project);
+
+Issue.hasMany(History);
+History.belongsTo(Issue);
+
 module.exports = {
   db,
   models: {
@@ -72,5 +85,6 @@ module.exports = {
     Issue,
     Comment,
     Assignment,
+    Notification,
   },
 };

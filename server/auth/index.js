@@ -14,7 +14,29 @@ router.post("/login", async (req, res, next) => {
 
 router.post("/signup", async (req, res, next) => {
   try {
-    const user = await User.create(req.body);
+    const users = await User.findAll();
+
+    const getImage = () => {
+      const userPhotos = users.map((user) => user.image);
+
+      const generatePhoto = () =>
+        `https://randomuser.me/api/portraits/men/${Math.floor(
+          Math.random() * (99 - 1) + 1
+        )}.jpg`;
+
+      const potentialImgUrl = generatePhoto();
+      let timesRan = 0;
+
+      while (userPhotos.includes(potentialImgUrl) && timesRan <= 100) {
+        potentialImgUrl = generatePhoto();
+        timesRan++;
+      }
+
+      return potentialImgUrl;
+    };
+
+    const user = await User.create({ ...req.body, image: getImage() });
+
     res.send({ token: await user.generateToken() });
   } catch (err) {
     if (err.name === "SequelizeUniqueConstraintError") {
@@ -28,6 +50,17 @@ router.post("/signup", async (req, res, next) => {
 router.get("/me", async (req, res, next) => {
   try {
     res.send(await User.findByToken(req.headers.authorization));
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+router.put("/", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    const updatedUser = await user.update(req.body);
+
+    res.status(200).json(updatedUser);
   } catch (ex) {
     next(ex);
   }

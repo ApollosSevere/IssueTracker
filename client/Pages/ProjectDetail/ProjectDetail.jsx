@@ -1,141 +1,119 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
+// Modules/Libraries
 import { connect } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { fetchProjectUsers } from "../../store/users";
+// Redux Functions
+import { fetchProjectUsers, project_cleanup } from "../../store/users";
 
-const RowItem = ({ user }) => {
-  return (
-    <tr>
-      <td>
-        <p className="username">{user.username}</p>
-      </td>
-      <td>
-        <p className="roleName">{user.roleName}</p>
-      </td>
-      <td>
-        <p className="email">{user.email}</p>
-      </td>
-    </tr>
-  );
-};
+// Components
+import TicketDetail from "../TicketDetail/TicketDetail.jsx";
+import ProjectTeamTable from "../../Components/Tables/ProjectTeamTable";
+import ProjectTicketsTable from "../../Components/Tables/ProjectTicketsTable";
 
-const RowItemIssue = ({ issue }) => {
-  return (
-    <tr>
-      <td>
-        <Link to={`/ticketDetail/${issue.id}`}>
-          <p className="username">{issue.issue_summary}</p>
-        </Link>
-      </td>
-      <td>
-        <p className="roleName">{issue.createdAt}</p>
-      </td>
-      <td>
-        <p className="email">
-          | {issue.assigned_users.map((v) => v.username).join(", ")} |
-        </p>
-      </td>
-    </tr>
-  );
-};
+// Reactstrap
+import { Row, Col, Container } from "reactstrap";
 
-export const ProjectDetail = ({ projectData, getProjectUsers, userId }) => {
-  const { projectId } = useParams();
+export const ProjectDetail = ({
+  error,
+  projectData,
+  projectCleanup,
+  getProjectUsers,
+}) => {
+  const { projectId, ticketId } = useParams();
+  const [isLoading, setLoading] = useState(true);
+
+  const [projectTeam, setProjectTeam] = useState([]);
+  const [projectTickets, setProjectTickets] = useState([]);
+  const [isNewTicketOpen, setIsNewTicketOpen] = useState(false);
+  const [isEditTicketOpen, setIsEditTicketOpen] = useState(false);
+  const [selectedTicketId, setSelectedTicketId] = useState(ticketId || "");
+  const [selectedTicket, setSelectedTicket] = useState({});
+
+  const toggleCreateTicket = () => setIsNewTicketOpen(!isNewTicketOpen);
+  const toggleEditTicket = () => setIsEditTicketOpen(!isEditTicketOpen);
+
   const info = projectData ? projectData : "Loading ..";
-
-  const sortIssue = (array) =>
-    array.sort(function (a, b) {
-      // Turn your strings into dates, and then subtract them
-      // to get a value that is either negative, positive, or zero.
-      return new Date(a.createdAt) - new Date(b.createdAt);
-    });
-
-  const rowData =
-    Object.keys(projectData).length > 0 ? (
-      projectData.users.map((user) => (
-        <RowItem key={user.username} user={user} />
-      ))
-    ) : (
-      <tr>
-        <td>
-          <p>"loading..."</p>
-        </td>
-      </tr>
-    );
-
-  const rowDataIssues =
-    Object.keys(projectData).length > 0 ? (
-      sortIssue(projectData.issues).map((issue) => (
-        <RowItemIssue key={issue.id} issue={issue} />
-      ))
-    ) : (
-      <tr>
-        <td>
-          <p>"loading..."</p>
-        </td>
-      </tr>
-    );
 
   useEffect(() => {
     try {
-      getProjectUsers(projectId);
+      getProjectUsers(projectId, setLoading);
     } catch (error) {
       console.log(error);
     }
+
+    return () => {
+      projectCleanup();
+    };
   }, []);
 
   return (
-    <div className="pd">
-      <h3 className="pd-MainTitle">Project Details</h3>
-      <p className="pd-name">Name: {info.name}</p>
-      <p className="pd-name">Description: {info.project_desc}</p>
+    <>
+      <Container style={{ height: "90vh" }} className="mt--7 vh-70" fluid>
+        <Row className="mt-0">
+          <Col>
+            <h1 className="text-white d-none d-lg-inline-block">
+              {info.name || "loading ..."}
+            </h1>
+          </Col>
+          <Col>
+            <h2 className="text-white d-none d-lg-inline-block">
+              {info.project_desc || "loading ..."}
+            </h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col xl="4" className="mt-3">
+            <ProjectTeamTable
+              projectTeam={projectData}
+              isLoading={isLoading}
+              error={error}
+            />
+          </Col>
 
-      <div className="pd-users">
-        <h3 className="pd-title">Assigned Users</h3>
+          <Col xl="8" className="mt-3">
+            <ProjectTicketsTable
+              projectId={projectId}
+              projectTickets={projectData}
+              setProjectTickets={setProjectTickets}
+              projectTeam={projectTeam}
+              selectedTicket={selectedTicket}
+              setSelectedTicketId={setSelectedTicketId}
+              toggleEditTicket={toggleEditTicket}
+              toggleCreateTicket={toggleCreateTicket}
+              isEditTicketOpen={isEditTicketOpen}
+              isNewTicketOpen={isNewTicketOpen}
+              isLoading={isLoading}
+              error={error}
+            />
+          </Col>
+        </Row>
 
-        <table className="pd-usersTable">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Current Role</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-
-          <tbody>{rowData}</tbody>
-        </table>
-      </div>
-
-      <div className="pd-tickets">
-        <h3 className="pd-title">Project Tickets</h3>
-
-        {/* Turn Add Ticket page into a Modal Later!! */}
-        <Link to={`/addticket/${projectId}`}>Create New</Link>
-
-        <table className="pd-issuesTable">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Created</th>
-              <th>Assigned To</th>
-            </tr>
-          </thead>
-
-          <tbody>{rowDataIssues}</tbody>
-        </table>
-      </div>
-    </div>
+        <Row className="mt-5">
+          <Col xl="12">
+            <TicketDetail selectedTicketId={selectedTicketId} />
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
 const mapStateToProps = (state) => ({
-  projectData: state.users,
   userId: state.auth.id,
+  projectData: state.users,
+  error: state.users
+    ? state.users.error
+    : {
+        response: { data: "Sorry, something went wrong" },
+      },
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getProjectUsers: (projectId) => dispatch(fetchProjectUsers(projectId)),
+  projectCleanup: () => dispatch(project_cleanup()),
+  getProjectUsers: (projectId, setLoading) =>
+    dispatch(fetchProjectUsers(projectId, setLoading)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetail);

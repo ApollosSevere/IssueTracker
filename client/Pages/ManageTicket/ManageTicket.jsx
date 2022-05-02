@@ -1,59 +1,73 @@
+import "./manageTicket.css";
 import React, { useEffect, useState } from "react";
+
+// Modules/Libraries
 import { connect } from "react-redux";
-import { useParams, Link } from "react-router-dom";
-
-import { fetchTicket, manageTicket } from "../../store/issue";
-import { fetchProjectUsers } from "../../store/users";
-import TagSelector from "../../components/utils/TagSelector.jsx";
-import { loadAttributes } from "../../store/fliedAttributes";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import NumberPicker from "react-widgets/NumberPicker";
 
+// Redux Functions
+import { fetchProjectUsers } from "../../store/users";
+import { addNotification } from "../../store/notifications";
+import { loadAttributes } from "../../store/fliedAttributes";
+import { fetchTicket, manageTicket } from "../../store/issue";
+
+// Components
+import TagSelector from "../../components/utils/TagSelector.jsx";
+
+// Reactstrap
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  Label,
+  Button,
+  Container,
+  FormGroup,
+} from "reactstrap";
+
 const ManageTicket = ({
-  getProjectUsers,
-  getAttributes,
+  ticketId,
   getTickets,
   ticketData,
-  submitManagedTicket,
+  getAttributes,
   fliedAttributes,
   allProjectUsers,
-  userId,
+  getProjectUsers,
+  toggleManageTicket,
+  submitNotification,
+  submitManagedTicket,
 }) => {
-  const { ticketId } = useParams();
-  //   const info = projectData ? projectData : "Loading ..";
-
   const {
     id,
+    type,
     title,
-    issue_summary,
-    issue_description,
-    target_end_date,
-    target_start_date,
     status,
     priority,
-    type,
+    comments,
+    pm_notes,
+    createdAt,
     start_date,
     projectName,
     time_estimate,
+    issue_summary,
+    target_end_date,
+    issue_description,
+    target_start_date,
     submitter_username,
-    createdAt,
     updatedAt: lastUpdate,
     assigned_users: currentAssignedUsers,
-    comments,
   } = ticketData;
 
-  const [formData, setFormData] = useState({ notes: "" });
+  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState();
   const [priorityPick, setPriorityPick] = useState();
+  const [timeEstimate, setTimeEstimate] = useState();
   const [addUsersPick, setAddUsersPick] = useState([]);
   const [removeUsersPick, setRemoveUsersPick] = useState([]);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-
-  const [timeEstimate, setTimeEstimate] = useState();
-
-  console.log(currentAssignedUsers);
+  const [formData, setFormData] = useState({ notes: pm_notes });
 
   const assignedUsernames =
     currentAssignedUsers && currentAssignedUsers.map((v) => v.username);
@@ -65,18 +79,6 @@ const ManageTicket = ({
         )
       : [];
 
-  const commentView =
-    comments &&
-    comments.map((comment) => (
-      <div key={comment.id}>
-        <p style={{ fontSize: "16px" }}>{comment.text}</p>
-        <h6>Posted by: {comment.commenter_username}</h6>
-        <p style={{ fontSize: "12px" }}>{comment.createdAt}</p>
-        <hr />
-        <br></br>
-      </div>
-    ));
-
   const handleChange = ({ target }) => {
     setFormData({ ...formData, [target.name]: target.value });
   };
@@ -84,6 +86,9 @@ const ManageTicket = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      const usersToAdd = addUsersPick.map((v) => v.value);
+      const usersToRemove = removeUsersPick.map((v) => v.value);
+
       await submitManagedTicket(
         ticketId,
         {
@@ -94,16 +99,53 @@ const ManageTicket = ({
           projectName,
           timeEstimate,
           priority: priorityPick.value,
-          usersToAdd: addUsersPick.map((v) => v.value),
-          usersToRemove: removeUsersPick.map((v) => v.value),
+          usersToAdd,
+          usersToRemove,
+          pm_notes: formData.notes,
         },
         "manager"
       );
       await getTickets(ticketId);
 
       setFormData({ text: "" });
-      //   await getProjects();
-      //   setPosted(true);
+
+      if (usersToAdd.length > 0) {
+        submitNotification({
+          usersToNotify: usersToAdd,
+          updateObj: {
+            summary: `New Task assignment`,
+            subject: "Issue Assigned",
+            issueId: ticketId,
+            projectName,
+          },
+        });
+      }
+
+      if (usersToRemove.length > 0) {
+        submitNotification({
+          usersToNotify: usersToRemove,
+          updateObj: {
+            summary: `You have been removed from assignment: ${ticketId}`,
+            subject: "Issue Assigned",
+            issueId: ticketId,
+            projectName,
+          },
+        });
+      }
+
+      if (usersToAdd.length > 0) {
+        submitNotification({
+          usersToNotify: [submitter_username],
+          updateObj: {
+            summary: `Your ticket has been assigned to developers`,
+            subject: "Issue Assigned",
+            issueId: ticketId,
+            projectName,
+          },
+        });
+      }
+
+      toggleManageTicket();
     } catch (error) {
       console.log(error);
     }
@@ -111,9 +153,9 @@ const ManageTicket = ({
 
   useEffect(() => {
     try {
-      getProjectUsers(projectName);
       getAttributes();
       getTickets(ticketId);
+      getProjectUsers(projectName);
     } catch (error) {
       console.log(error);
     }
@@ -121,13 +163,11 @@ const ManageTicket = ({
 
   useEffect(() => {
     try {
+      setTimeEstimate(time_estimate ? time_estimate : 0);
+      setEndDate(target_end_date ? new Date(target_end_date) : new Date());
+      setPriorityPick(priority ? { value: priority, label: priority } : "");
       setStartDate(
         target_start_date ? new Date(target_start_date) : new Date()
-      );
-      setEndDate(target_end_date ? new Date(target_end_date) : new Date());
-      setTimeEstimate(time_estimate ? time_estimate : 0);
-      setPriorityPick(
-        priority ? { value: priority, label: priority } : priority
       );
     } catch (error) {
       console.log(error);
@@ -135,180 +175,125 @@ const ManageTicket = ({
   }, [target_end_date]);
 
   return (
-    <div className="td">
-      <h3 className="td-MainTitle">Ticket Details</h3>
-      <p className="td-name">Title: {title || "none"}</p>
-      <p className="td-name">Description: {issue_description || "...."}</p>
-      <p className="td-desc">Project: {projectName || "...."}</p>
-      <p className="td-created">Created: {createdAt || "...."}</p>
-      <p className="td-name">
-        Updated: {lastUpdate == createdAt ? "No updates .." : lastUpdate}
-      </p>
-      <p className="td-name">Submitter: {submitter_username || "...."}</p>
-      <p className="td-name">
-        Currently Assigned To:{" "}
-        {(currentAssignedUsers &&
-          currentAssignedUsers.map((user) => user.username).join(", ")) ||
-          "unassigned"}
-      </p>
+    <>
+      <Container fluid>
+        <Form onSubmit={handleSubmit}>
+          <Row>
+            <Col>
+              <FormGroup>
+                <Label
+                  htmlFor="title"
+                  className="lease-form-label mandatory-entry"
+                >
+                  Set Priority
+                </Label>
 
-      {/* <div
-        style={{ display: "flex", gap: "20px", alignItems: "center" }}
-        className="assigned"
-      >
-        <p className="td-name">
-          Assigned To:{" "}
-          {(assigned_users &&
-            assigned_users.map((user) => user.username).join(", ")) ||
-            "...."}
-        </p>
-        <Link to={`/manageTicket/${ticketId}`}>Manage</Link>
-      </div>
-      <p className="td-name">Priority: {priority || "Undecided"}</p>
-      <p className="td-name">Type: {type || "loading"}</p>
-      <p className="td-name">Status: {status || "Undecided"}</p> */}
+                <TagSelector
+                  optionSelected={priorityPick}
+                  setSelected={setPriorityPick}
+                  option={fliedAttributes.priority || []}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "30px",
-          alignItems: "center",
-        }}
-        className="yo"
-      >
-        <p>Projected Start Date: </p>
-        <div style={{}}>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-          />
-        </div>
-      </div>
+          <Row>
+            <Col>
+              <FormGroup>
+                <Label for="ticketDescription">Add Notes</Label>
+                <Input
+                  type="textarea"
+                  name="notes"
+                  id="ticketDescription"
+                  placeholder="Enter Notes"
+                  onChange={handleChange}
+                  value={formData.notes}
+                  rows="5"
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "30px",
-          alignItems: "center",
-        }}
-        className="yo"
-      >
-        <p>Projected *End Date: </p>
-        <div style={{}}>
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-          />
-        </div>
-      </div>
+          <Row>
+            <div className="col-6">
+              <FormGroup>
+                <Label for="assignees">Assign Devs</Label>
+                <TagSelector
+                  optionSelected={addUsersPick}
+                  setSelected={setAddUsersPick}
+                  option={unassignedUsers}
+                  multi={true}
+                />
+              </FormGroup>
+            </div>
+            <div className="col-6">
+              <FormGroup>
+                <Label for="removingDevs">Remove Devs</Label>
+                <TagSelector
+                  optionSelected={removeUsersPick}
+                  setSelected={setRemoveUsersPick}
+                  option={currentAssignedUsers || []}
+                  multi={true}
+                />
+              </FormGroup>
+            </div>
+          </Row>
 
-      <div
-        style={{
-          display: "flex",
-          // gap: "30px",
-          // alignItems: "center",
-          flexDirection: "column",
-          marginBottom: "30px",
-        }}
-        className="yo"
-      >
-        <p> Time Estimate (Hours) </p>
-        <div style={{}}>
-          <NumberPicker
-            onChange={(value) => setTimeEstimate(value)}
-            value={timeEstimate}
-            step={0.5}
-            min={0}
-          />
-        </div>
-      </div>
+          <Row>
+            <Col>
+              <FormGroup>
+                <Label for="type">Start Date</Label>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="type">End Date</Label>
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="type">Time Estimate (Hours)</Label>
+                <NumberPicker
+                  onChange={(value) => setTimeEstimate(value)}
+                  value={timeEstimate}
+                  step={0.5}
+                  min={0}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "30px",
-          alignItems: "center",
-        }}
-        className="yo"
-      >
-        <p>Set Priority: </p>
-        {console.log(priorityPick)}
-        <div style={{ width: "200px" }}>
-          <TagSelector
-            optionSelected={priorityPick}
-            setSelected={setPriorityPick}
-            option={fliedAttributes.priority || []}
-          />
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          // justifyContent: "space-evenly",
-          // width: "100%",
-          gap: "50px",
-          // maxWidth: "55%",
-        }}
-        className="hey"
-      >
-        <div style={{ width: "250px" }} className="right">
-          <h3>Add Users</h3>
-          <TagSelector
-            optionSelected={addUsersPick}
-            setSelected={setAddUsersPick}
-            option={unassignedUsers}
-            multi={true}
-          />
-        </div>
-
-        <div style={{ width: "250px" }} className="left">
-          <h3>Remove Users</h3>
-          <TagSelector
-            optionSelected={removeUsersPick}
-            setSelected={setRemoveUsersPick}
-            option={currentAssignedUsers || []}
-            multi={true}
-          />
-        </div>
-      </div>
-
-      <h3>Add Notes:</h3>
-
-      <form onSubmit={(event) => handleSubmit(event)} className="writeForm">
-        <div className="writeFormGroup">
-          <textarea
-            style={{ width: "350px", height: "300px" }}
-            className="writeInput"
-            placeholder="Notes .."
-            type="text"
-            // autoFocus={true}
-            onChange={handleChange}
-            name="notes"
-          />
-        </div>
-
-        <button className="writeSubmit" type="submit">
-          Submit
-        </button>
-      </form>
-    </div>
+          <Button color="success" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </Container>
+    </>
   );
 };
 
 const mapStateToProps = (state) => ({
-  allProjectUsers: state.users || [],
   userId: state.auth.username,
   ticketData: state.issue || {},
+  allProjectUsers: state.users || [],
   fliedAttributes: state.fliedAttributes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTickets: (ticketId) => dispatch(fetchTicket(ticketId)),
   getAttributes: () => dispatch(loadAttributes()),
-  getProjectUsers: (projectId) => dispatch(fetchProjectUsers(projectId)),
+  getTickets: (ticketId) => dispatch(fetchTicket(ticketId)),
   submitManagedTicket: (ticketId, updatedObj, userType) =>
     dispatch(manageTicket(ticketId, updatedObj, userType)),
+  getProjectUsers: (projectId) => dispatch(fetchProjectUsers(projectId)),
+  submitNotification: (updatedObj) => dispatch(addNotification(updatedObj)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTicket);

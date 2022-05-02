@@ -28,6 +28,18 @@ export const me = () => async (dispatch) => {
   }
 };
 
+export const updateUser = (updateObj) => async (dispatch) => {
+  const token = window.localStorage.getItem(TOKEN);
+  if (token) {
+    const res = await axios.put("/auth", updateObj, {
+      headers: {
+        authorization: token,
+      },
+    });
+    return dispatch(setAuth(res.data));
+  }
+};
+
 export const authenticate =
   (username, password, method) => async (dispatch) => {
     try {

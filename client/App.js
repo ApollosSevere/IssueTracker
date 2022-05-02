@@ -1,15 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import Navbar from "./components/Navbar/Navbar";
-import Routes from "./Routes";
+// Redux Functions
+import { me } from "./store/auth.js";
 
-const App = () => {
+// Components
+import Main from "./layouts/Main.jsx";
+import AuthLayout from "./layouts/AuthLayout.jsx";
+
+// Modules/Libraries
+import { connect } from "react-redux";
+import { withRouter, Route, Switch } from "react-router-dom";
+
+function App({ loadInitialData, isLoggedIn }) {
+  useEffect(() => {
+    loadInitialData();
+  });
+
   return (
-    <div>
-      <Navbar /> {/* <-- Remove from here when config complete! */}
-      <Routes />
-    </div>
+    <>
+      {isLoggedIn ? (
+        <Switch>
+          <Route path="/" render={(props) => <Main {...props} />} />
+
+          <Route path="*">
+            <h1>404 No page found</h1>
+          </Route>
+        </Switch>
+      ) : (
+        <Switch>
+          <Route
+            path="/"
+            render={(props) => {
+              return <AuthLayout {...props} />;
+            }}
+          />
+        </Switch>
+      )}
+    </>
   );
+}
+
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.auth.username,
+  };
 };
 
-export default App;
+const mapDispatch = (dispatch) => {
+  return {
+    loadInitialData() {
+      dispatch(me());
+    },
+  };
+};
+
+export default withRouter(connect(mapState, mapDispatch)(App));

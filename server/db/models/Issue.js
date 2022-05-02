@@ -10,7 +10,7 @@ module.exports = db.define("issue", {
     allowNull: false,
   },
   issue_description: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   target_start_date: {
     type: Sequelize.DATE,
@@ -30,24 +30,19 @@ module.exports = db.define("issue", {
   time_estimate: {
     type: Sequelize.FLOAT,
   },
+  pm_notes: { type: Sequelize.TEXT },
   tags: {
     type: Sequelize.ENUM,
     values: ["Frontend", "Backend", "Customer"],
   },
   type: {
     type: Sequelize.ENUM,
-    values: [
-      "Issue",
-      "Bug",
-      "Error",
-      "Feature Request",
-      "Service Request",
-      "Other",
-    ],
+    values: ["Bug", "Error", "Feature Request", "Service Request", "Other"],
   },
   priority: {
     type: Sequelize.ENUM,
-    values: ["Low", "Medium", "High", "Immediate"],
+    values: ["Low", "Medium", "High", "Immediate", "Unassigned"],
+    defaultValue: "Unassigned",
   },
   status: {
     type: Sequelize.ENUM,

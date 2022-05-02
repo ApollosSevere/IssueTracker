@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const TOKEN = "token";
-const token = window.localStorage.getItem(TOKEN);
 
 /** ACTION TYPES */
 
@@ -18,6 +17,7 @@ const _setTicket = (ticket) => ({
 
 export const fetchTicket = (ticketId) => async (dispatch) => {
   try {
+    const token = window.localStorage.getItem(TOKEN);
     const { data: ticket } = await axios.get(`/api/tickets/${ticketId}`, {
       headers: { authorization: token },
     });
@@ -30,6 +30,7 @@ export const fetchTicket = (ticketId) => async (dispatch) => {
 export const manageTicket =
   (ticketId, updatedObj, userType) => async (dispatch) => {
     try {
+      const token = window.localStorage.getItem(TOKEN);
       const { data: updatedTicket } = await axios.put(
         `/api/tickets/${userType}/${ticketId}`,
         updatedObj,
@@ -45,9 +46,26 @@ export const manageTicket =
 
 export const addTicket = (ticketInfo) => async (dispatch) => {
   try {
-    await axios.post(`/api/tickets`, ticketInfo, {
+    const token = window.localStorage.getItem(TOKEN);
+    const { data: ticket } = await axios.post(`/api/tickets`, ticketInfo, {
       headers: { authorization: token },
     });
+    return ticket;
+  } catch (error) {
+    return dispatch(_setTicket({ error: error }));
+  }
+};
+
+export const deleteComment = (commentId) => async (dispatch) => {
+  try {
+    const token = window.localStorage.getItem(TOKEN);
+    const { data: updatedTicket } = await axios.delete(
+      `/api/tickets/comment/${commentId}`,
+      {
+        headers: { authorization: token },
+      }
+    );
+    dispatch(_setTicket(updatedTicket));
   } catch (error) {
     return dispatch(_setTicket({ error: error }));
   }
@@ -55,9 +73,26 @@ export const addTicket = (ticketInfo) => async (dispatch) => {
 
 export const addComment = (commentInfo) => async (dispatch) => {
   try {
+    const token = window.localStorage.getItem(TOKEN);
     await axios.post(`/api/tickets/addcomment`, commentInfo, {
       headers: { authorization: token },
     });
+  } catch (error) {
+    return dispatch(_setTicket({ error: error }));
+  }
+};
+
+export const updateIssueStatus = (ticketId, newStatus) => async (dispatch) => {
+  try {
+    const token = window.localStorage.getItem(TOKEN);
+    const { data: updatedTicket } = await axios.put(
+      `/api/tickets/owner/${ticketId}`,
+      newStatus,
+      {
+        headers: { authorization: token },
+      }
+    );
+    return updatedTicket;
   } catch (error) {
     return dispatch(_setTicket({ error: error }));
   }

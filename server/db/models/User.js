@@ -25,6 +25,34 @@ const User = db.define("user", {
   email: {
     type: Sequelize.STRING,
   },
+  phone_number: {
+    type: Sequelize.FLOAT,
+    allowNull: true,
+  },
+  address: {
+    type: Sequelize.STRING,
+  },
+  city: {
+    type: Sequelize.STRING,
+  },
+  state: {
+    type: Sequelize.STRING,
+  },
+  country: {
+    type: Sequelize.STRING,
+  },
+  zipcode: {
+    type: Sequelize.INTEGER,
+  },
+  about_me: {
+    type: Sequelize.TEXT,
+  },
+  image: {
+    type: Sequelize.STRING,
+  },
+  image_location: {
+    type: Sequelize.STRING,
+  },
   // role: {
   //   type: Sequelize.ENUM,
   //   values: ["Admin", "Project Manager", "Developer", "Submitter"],
