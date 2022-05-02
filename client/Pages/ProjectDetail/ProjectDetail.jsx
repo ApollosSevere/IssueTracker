@@ -9,8 +9,8 @@ import { fetchProjectUsers, project_cleanup } from "../../store/users";
 
 // Components
 import TicketDetail from "../TicketDetail/TicketDetail.jsx";
-import ProjectTeamTable from "../../Components/Tables/ProjectTeamTable";
-import ProjectTicketsTable from "../../Components/Tables/ProjectTicketsTable";
+import ProjectTeamTable from "../../components/Tables/ProjectTeamTable";
+import ProjectTicketsTable from "../../components/Tables/ProjectTicketsTable";
 
 // Reactstrap
 import { Row, Col, Container } from "reactstrap";

@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { updateUser, me } from "../../store";
 
 // Components
-import UserHeader from "../../Components/Headers/UserHeader";
+import UserHeader from "../../components/Headers/UserHeader";
 
 // Reactstrap
 import {

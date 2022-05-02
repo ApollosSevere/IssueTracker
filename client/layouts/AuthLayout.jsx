@@ -6,7 +6,7 @@ import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 
 // Components
 import routes from "../Routes.js";
-import Footer from "../Components/Footers/Foorter.js";
+import Footer from "../components/Footers/Foorter.js";
 import AuthNavbar from "../components/Navbars/AuthNavbar.js";
 
 // Reactstrap

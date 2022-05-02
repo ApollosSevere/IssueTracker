@@ -8,7 +8,7 @@ import { fetchProjectUsers } from "../../store/users";
 import { fetchMyTickets } from "../../store/myTickets";
 
 // Components
-import ProjectTicketsTable from "../../Components/Tables/ProjectTicketsTable";
+import ProjectTicketsTable from "../../components/Tables/ProjectTicketsTable";
 
 // Reactstrap
 import { Row, Col, Container } from "reactstrap";

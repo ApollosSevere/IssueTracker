@@ -6,10 +6,10 @@ import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 
 // Components
 import routes from "../Routes";
-import Header from "../Components/Headers/Header";
-import Footer from "../Components/Footers/Foorter";
+import Header from "../components/Headers/Header";
+import Footer from "../components/Footers/Foorter";
 import Sidebar from "../components/Sidebar/Sidebar.js";
-import AdminNavbar from "../Components/Navbars/AdminNavbar";
+import AdminNavbar from "../components/Navbars/AdminNavbar";
 
 // Reactstrap
 import { Container } from "reactstrap";
