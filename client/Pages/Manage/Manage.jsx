@@ -11,7 +11,7 @@ import { loadProjects } from "../../store/project";
 import { loadCompanyUsers, updateUserRole } from "../../store/companyUsers";
 
 // Components
-import TagSelector from "../../components/utils/TagSelector.jsx";
+import TagSelector from "../../components/Utils/TagSelector.jsx";
 import PaginationComponent from "../../components/Tables/PaginationComponent";
 
 // Reactstrap

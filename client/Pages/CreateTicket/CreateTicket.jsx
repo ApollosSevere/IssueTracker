@@ -15,7 +15,7 @@ import { addNotification } from "../../store/notifications";
 import { loadAttributes } from "../../store/fliedAttributes";
 
 // Components
-import TagSelector from "../../components/utils/TagSelector.jsx";
+import TagSelector from "../../components/Utils/TagSelector.jsx";
 
 import {
   Row,

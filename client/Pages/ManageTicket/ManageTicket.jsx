@@ -14,7 +14,7 @@ import { loadAttributes } from "../../store/fliedAttributes";
 import { fetchTicket, manageTicket } from "../../store/issue";
 
 // Components
-import TagSelector from "../../components/utils/TagSelector.jsx";
+import TagSelector from "../../components/Utils/TagSelector.jsx";
 
 // Reactstrap
 import {
