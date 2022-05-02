@@ -2,7 +2,7 @@
   "name": "issuetracker",
   "version": "2.0.0",
   "description": "Internal Issue/Bug Tracker application for Cortez, Inc.",
-  "main": "index.js",
+  "main": "./server/index.js",
   "scripts": {
     "build": "webpack",
     "build:dev": "npm run build -- --watch --mode=development",
