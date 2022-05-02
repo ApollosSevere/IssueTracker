@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 // Components
-import Kanban from "../../Components/Kanban/Kanban";
+import Kanban from "../../Components/Kanban/Kanban.js";
 
 // Reactstrap
 import { Col, Row, Container } from "reactstrap";
