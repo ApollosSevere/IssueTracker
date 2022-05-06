@@ -50,7 +50,7 @@ export const ProjectDetail = ({
 
   return (
     <>
-      <Container style={{ height: "90vh" }} className="mt--7 vh-70" fluid>
+      <Container className="mt--7 vh-70" fluid>
         <Row className="mt-0">
           <Col>
             <h1 className="text-white d-none d-lg-inline-block">

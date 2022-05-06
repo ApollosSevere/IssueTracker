@@ -32,10 +32,15 @@ router.post("/signup", async (req, res, next) => {
         timesRan++;
       }
 
-      return potentialImgUrl;
+      return timesRan <= 99
+        ? potentialImgUrl
+        : "../../assets/img/theme/userPhoto.png";
     };
 
-    const user = await User.create({ ...req.body, image: getImage() });
+    const user = await User.create({
+      ...req.body,
+      image: getImage(),
+    });
 
     res.send({ token: await user.generateToken() });
   } catch (err) {

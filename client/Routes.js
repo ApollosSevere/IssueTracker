@@ -1,4 +1,5 @@
 // Components / Pages
+import About from "./Pages/About/About.jsx";
 import Manage from "./Pages/Manage/Manage.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
 import Projects from "./Pages/Projects/Projects.jsx";
@@ -116,6 +117,15 @@ const routes = (user = {}) => {
       root: "/main",
       display: false,
     },
+    {
+      path: "/about",
+      name: "About Page",
+      icon: "ni ni-single-copy-04 text-teal",
+      component: About,
+      layout: "/main",
+      root: "/main",
+      display: false,
+    },
 
     /* ---- Auth ----- */
     {
@@ -132,6 +142,15 @@ const routes = (user = {}) => {
       name: "Signup",
       icon: "ni ni-circle-08 text-pink",
       component: Signup,
+      layout: "/auth",
+      root: "/auth",
+      display: false,
+    },
+    {
+      path: "/about",
+      name: "About Page",
+      icon: "ni ni-single-copy-04 text-teal",
+      component: About,
       layout: "/auth",
       root: "/auth",
       display: false,

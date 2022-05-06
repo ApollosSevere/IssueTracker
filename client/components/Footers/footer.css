@@ -1,0 +1,10 @@
+a.nav-link {
+    display: flex;
+}
+.nav {
+    flex-wrap: nowrap !important;
+}
+
+.footer .copyright{
+    /* padding-bottom: 10px; */
+}

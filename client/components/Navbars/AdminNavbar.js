@@ -66,7 +66,7 @@ const AdminNavbar = ({
       >
         <Container fluid>
           <div className="h4 mb-0 text-white text-uppercase  d-lg-inline-block">
-            {brandText}
+            Bug Tracker
           </div>
 
           <Nav className="align-items-center d-flex" navbar>
@@ -106,11 +106,15 @@ const AdminNavbar = ({
 
                 <DropdownItem divider />
 
-                <DropdownItem href="#pablo">
+                <DropdownItem
+                  target="_blank"
+                  href="https://apollos-portfolio.herokuapp.com/"
+                >
                   <Media className="align-items-center">
                     <a
+                      target="_blank"
                       className="avatar rounded-circle mr-3 avatar-sm "
-                      href="#pablo"
+                      href="https://apollos-portfolio.herokuapp.com/"
                       onClick={(e) => e.preventDefault()}
                     >
                       <img
@@ -119,7 +123,11 @@ const AdminNavbar = ({
                         src={"../../assets/img/theme/apollo_headshot.jpeg"}
                       />
                     </a>
-                    <Media>
+                    <Media
+                      target="_blank"
+                      style={{ color: "black" }}
+                      href="https://apollos-portfolio.herokuapp.com/"
+                    >
                       <span className="mb-0 text-sm">
                         Learn more about Apollos
                       </span>

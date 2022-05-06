@@ -47,7 +47,7 @@ const AuthLayout = (props) => {
 
   return (
     <>
-      <div style={{ width: "100%" }} className="main-content" ref={mainContent}>
+      <div className="main-content" ref={mainContent}>
         <AuthNavbar />
         <div className="header bg-gradient-info py-7 ">
           <Container>
@@ -59,8 +59,7 @@ const AuthLayout = (props) => {
                     style={{ color: "white", fontWeight: "500" }}
                     className="text-lead"
                   >
-                    Use these awesome forms to login or create new account in
-                    your project for free.
+                    Please Login or use Live Demos!
                   </p>
                 </Col>
               </Row>
@@ -93,7 +92,9 @@ const AuthLayout = (props) => {
           </Row>
         </Container>
       </div>
-      <Footer />
+      <Container style={{ width: "100%", backgroundColor: "#f7fafc" }} fluid>
+        <Footer />
+      </Container>
     </>
   );
 };

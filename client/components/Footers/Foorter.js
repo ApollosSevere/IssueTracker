@@ -1,20 +1,21 @@
+import "./footer.css";
 import React from "react";
 import { Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer style={{ padding: "20px 40px" }} className="footer">
       <Row className="align-items-center justify-content-xl-between">
         <Col xl="6">
           <div className="copyright text-center text-xl-left text-muted">
             © {new Date().getFullYear()}{" "}
             <a
               className="font-weight-bold ml-1"
-              href="https://www.creative-tim.com?ref=adr-admin-footer"
+              // href="https://www.creative-tim.com?ref=adr-admin-footer"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Creative Tim
+              Apollos Severe
             </a>
           </div>
         </Col>
@@ -23,41 +24,34 @@ const Footer = () => {
           <Nav className="nav-footer justify-content-center justify-content-xl-end">
             <NavItem>
               <NavLink
-                href="https://www.creative-tim.com?ref=adr-admin-footer"
+                href="https://www.linkedin.com/in/apollos-severe/"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Creative Tim
+                <i class="uil uil-linkedin"></i>
+                Linkedin
               </NavLink>
             </NavItem>
 
             <NavItem>
               <NavLink
-                href="https://www.creative-tim.com/presentation?ref=adr-admin-footer"
+                href="https://github.com/ApollosSevere"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                About Us
+                <i class="uil uil-github"></i>
+                Github
               </NavLink>
             </NavItem>
 
             <NavItem>
               <NavLink
-                href="http://blog.creative-tim.com?ref=adr-admin-footer"
+                href="https://www.youtube.com/channel/UCnIgx66sV6TJQHsxpaeCK9w"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Blog
-              </NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink
-                href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md?ref=adr-admin-footer"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                MIT License
+                <i class="uil uil-youtube"></i>
+                YouTube
               </NavLink>
             </NavItem>
           </Nav>

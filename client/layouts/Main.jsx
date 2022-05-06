@@ -67,15 +67,17 @@ const Main = (props) => {
           {...props}
           brandText={getBrandText(props.location.pathname)}
         />
-        <Header />
 
-        <div className="content">
+        <Header />
+        <div
+          // style={{ height: }}
+          className="content"
+        >
           <Switch>
             {getRoutes(routes(props.loggedInUser))}
             <Redirect from="*" to="/main/dashboard" />
           </Switch>
         </div>
-
         <Container>
           <Footer />
         </Container>
