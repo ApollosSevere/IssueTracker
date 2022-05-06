@@ -25,7 +25,6 @@ router.get("/:projectId", requireToken, async (req, res, next) => {
     res.json(result);
   } catch (error) {
     next(error);
-    // res.status(401).send("User already exists");
   }
 });
 
@@ -92,9 +91,6 @@ router.put(
   canAccess,
   async (req, res, next) => {
     try {
-      // const issue = await Issue.findByPk(req.params.projectId);
-      // const updatedIssue = await issue.update(req.body);
-
       const { usersToAdd, name: projectId, usersToRemove } = req.body;
 
       let updatedChores;
@@ -126,7 +122,7 @@ router.put(
             const assignment = await Assignment.findAll({
               where: { userUsername: user, projectName: projectId },
             });
-            // console.log("removing ---->>.", assignment);
+
             await assignment[0].destroy();
 
             await Notification.create({
@@ -143,7 +139,6 @@ router.put(
 
       console.log(req.body);
 
-      // await Notification.create(req.body) Make this later!
       const projects = await Project.findAll({
         include: User,
         order: [["name", "ASC"]],
