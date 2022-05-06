@@ -1,46 +1,127 @@
-# Candidate Blog Assignment
-
-My solution to creating a Blog with two main resources: Post and Tags
-
-Deployed Link: https://blogassingment-apollo.herokuapp.com/
-
-## Assumptions
-
-1. The company would like users to hold separate accounts for posting Blogs
-2. Users can only edit or delete their post
-
-## Solution formulation
-
-Steps I executed for implementing main functionality:
-
-1. To display all posts ordered from newest to oldest:
-
-   - In the global object variable `feed`, there are two felids that keeps tract of `allPosts` and `filteredPost`:
-   - On the frontend level, the `allPost` variable is sorted then displayed
-
-2. To filter through Tagged Post:
-
-   - On the frontend, the `allPosts` global variable is filtered through a built in sort method. All filtered posts must include a Tag that a user wants to filter through. The result of this is placed in the `filteredPost` global variable.
-     The frontend only uses the `filteredPost` variable to display appropriate posts
-
-3. Tags :
-
-   - The `Post` table inside the PostgreSQL database has a flied named `tags` that holds an array of tags that can be associated with the post. This array flied is restricted to having only 3 values.
-
-## Libraries/Tools used
-
-- Written with: `React` version 16.8.6 | `Express`: 4.16.4
-  - "axios": "^0.21.1",
-  - "bcrypt": "^5.0.0",
-  - "compression": "^1.7.3",
-  - "express": "^4.16.4",
-  - "history": "^4.9.0",
-  - "jsonwebtoken": "^8.5.1",
-  - "morgan": "^1.9.1",
-  - "pg": "^8.5.1",
-  - "react-select": "^5.2.1",
-  - "sequelize": "^6.3.5",
-  - "style-loader": "^3.3.1"
+<div class="container body-content">
+        <h2>About Bug Tracker</h2>
+        <div>
+          <hr />
+          <p>
+            Bug Tracker is an application to track errors in software. It was
+            created by Apollos Severe.
+          </p>
+          <p>
+            Bug Tracker uses a ticketing system to record bugs or other issues
+            in the software development process on a per-project basis. It
+            implements user- and role-level security to ensure only authorized
+            users can access tickets and projects.
+          </p>
+          <p>
+            The application was built using Node.js and React with an
+            PostgresSQL database.
+          </p>
+          <p>
+            <b>Roles:</b> Bug Tracker has four roles that users can be assigned
+            to. And one Master role that gives access to all the applications
+            features. A user can be in one role at one time. Users are
+            automatically placed in a Submitter role upon registration.
+          </p>
+          <p>Below are brief descriptions of the permissions of each role:</p>
+          <p>
+            <b>Submitter</b>
+          </p>
+          <ul>
+            <li>Create new tickets for assigned projects</li>
+            <li>View and edit tickets they have submitted</li>
+          </ul>
+          <p>
+            <b>Developer</b>
+          </p>
+          <ul>
+            <li>View and edit tickets they have been assigned</li>
+            <li>
+              Granted access to Developers Kanban page to keep track of assigned
+              assignments
+            </li>
+          </ul>
+          <p>
+            <b>Project Manager</b>
+          </p>
+          <ul>
+            <li>View and edit tickets for projects they are assigned to</li>
+            <li>Assign a developer to a ticket</li>
+          </ul>
+          <p>
+            <b>Admin</b>
+          </p>
+          <ul>
+            <li>Assign users to roles</li>
+            <li>View and edit all tickets</li>
+            <li>Create new projects</li>
+            <li>Assign users to projects</li>
+            <li>Remove projects</li>
+          </ul>
+          <p>
+            For each role, users can add comments to tickets they have access
+            to.
+          </p>
+          <p>
+            <b>Ticket priorities:</b> A ticket can be Critical, High, Medium or
+            Low priority.
+          </p>
+          <p>
+            <b>Ticket statuses:</b> A ticket can be in one of five statuses:
+          </p>
+          <ul>
+            <li>
+              <b>Open:</b> Ticket automatically assigned this status on creation
+            </li>
+            <li>
+              <b>In Progress:</b> Ticket automatically changed to this status
+              when it is assigned to a developer
+            </li>
+            <li>
+              <b>Additional Info Required:</b> Ticket is waiting on a response
+              from a third-party source
+            </li>
+            <li>
+              <b>Resolved:</b> The issue raised in the ticket has been resolved
+            </li>
+          </ul>
+          <p>
+            <b>Ticket types:</b> A ticket can be of type Error report, Bug,
+            Service request, Feature request or Other.
+          </p>
+          <h2>FAQs</h2>
+          <p>
+            <b>How do I submit a new ticket?</b>
+          </p>
+          <p>
+            Make sure you are assigned the Submitter role and have been assigned
+            to the project. If not, contact your Admin. Navigate to your Tickets
+            page and click on the Create New link to fill out the ticket details
+            and submit the ticket.
+          </p>
+          <p>
+            <b>When are notifications sent out?</b>
+          </p>
+          <p>
+            Email notifications are sent to developers on the following events:
+          </p>
+          <ul>
+            <li>Developer assigned to ticket</li>
+            <li>Ticket reassigned to another developer</li>
+            <li>User other than the developer edits ticket</li>
+            <li>User other than developer adds a comment or attachment</li>
+          </ul>
+          <p>
+            <b>Can I change my user info?</b>
+          </p>
+          <p>Yes, a user can edit their information on the profile page</p>
+          <p>
+            <b>How can I get my role changed?</b>
+          </p>
+          <p>Contact your Admin to change your role.</p>
+        </div>
+        <hr />
+        <footer></footer>
+</div>
 
 ## How to setup
 
@@ -95,6 +176,5 @@ Sync and seed your database by running `npm run seed`. Running `npm run start:de
 
 1. The Tech Stack I decide to use was: `React` | `Redux` | `Sequelize` | `Express/Node`
 2. For global state management I chose to use Redux
-3. I structured the application to resemble a social media blog post site, where users see other peoples post as well as write and edit their own (editing and deleting a post is reserved only for the user who authored it)
-4. Deploy application on Heroku
+3. Deploy application on Heroku
    - I have made the application available on the internet incase if the person reviewing this Candidate Assignment has trouble configuring the application on their local machine
