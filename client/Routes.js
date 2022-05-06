@@ -129,19 +129,19 @@ const routes = (user = {}) => {
 
     /* ---- Auth ----- */
     {
-      path: "/login",
-      name: "Login",
-      icon: "ni ni-key-25 text-info",
-      component: Login,
+      path: "/signup",
+      name: "Signup",
+      icon: "ni ni-circle-08 text-pink",
+      component: Signup,
       layout: "/auth",
       root: "/auth",
       display: false,
     },
     {
-      path: "/signup",
-      name: "Signup",
-      icon: "ni ni-circle-08 text-pink",
-      component: Signup,
+      path: "/login",
+      name: "Login",
+      icon: "ni ni-key-25 text-info",
+      component: Login,
       layout: "/auth",
       root: "/auth",
       display: false,
@@ -159,9 +159,9 @@ const routes = (user = {}) => {
     // Default
     {
       path: "/",
-      name: "Login",
+      name: "Signup",
       icon: "ni ni-key-25 text-info",
-      component: Login,
+      component: Signup,
       layout: "/auth",
       root: "/auth",
       display: false,

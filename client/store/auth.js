@@ -57,7 +57,7 @@ export const authenticate =
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
-  history.push("/login");
+  history.push("/auth/signup");
   return {
     type: SET_AUTH,
     auth: {},

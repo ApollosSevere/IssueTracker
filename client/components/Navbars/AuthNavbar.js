@@ -21,7 +21,7 @@ const AuthNavbar = () => {
     <>
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
         <Container className="px-4">
-          <NavbarBrand to="/" tag={Link}>
+          <NavbarBrand to="/auth/signup" tag={Link}>
             <img alt="..." src="../favicon.ico" />
           </NavbarBrand>
           <button className="navbar-toggler" id="navbar-collapse-main">
