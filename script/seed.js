@@ -157,6 +157,7 @@ async function seed() {
       start_date: new Date(),
       target_end_date: new Date(),
       image_location: "../../assets/img/theme/blogAssignment.jpg",
+      cantModify: true,
     }),
     Project.create({
       name: "Fresh",
@@ -164,6 +165,7 @@ async function seed() {
       start_date: new Date(),
       target_end_date: new Date(),
       image_location: "../../assets/img/theme/freshLogo.png",
+      cantModify: true,
     }),
     Project.create({
       name: "Apollos Electro Store",
@@ -171,6 +173,7 @@ async function seed() {
       start_date: new Date(),
       target_end_date: new Date(),
       image_location: "../../assets/img/theme/electroStore.webp",
+      cantModify: true,
     }),
     Project.create({
       name: "Bug Tracker",
@@ -178,6 +181,7 @@ async function seed() {
       start_date: new Date(),
       target_end_date: new Date(),
       image_location: "../../favicon.ico",
+      cantModify: true,
     }),
   ]);
 

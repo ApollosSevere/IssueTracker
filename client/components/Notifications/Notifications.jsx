@@ -23,6 +23,8 @@ function Notifications({
   updateNotification,
   colorStyle = "white",
 }) {
+  const viewed = notifications.filter((not) => !not.viewed).length;
+
   const update_Notification = async (notification) => {
     try {
       await updateNotification(notification.id, { viewed: true });
@@ -66,8 +68,12 @@ function Notifications({
       <UncontrolledDropdown className="notifications" nav>
         <DropdownToggle className="pr-0" nav>
           <Media className="d-flex align-items-center">
-            <Media className="ml-2 d-lg-block">
+            <Media className="ml-2 d-lg-block icon-place">
               <i style={{ color: colorStyle }} class="fas fa-bell fa-lg"></i>
+
+              <div className="num">
+                {viewed !== 0 && (viewed < 9 ? viewed : "9+")}
+              </div>
             </Media>
           </Media>
         </DropdownToggle>

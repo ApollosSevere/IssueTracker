@@ -52,3 +52,15 @@
   gap: 10px;
 }
 
+.icon-place {
+  position: relative !important;
+}
+
+.num{
+  position: absolute;
+  left: 20px;
+  top: -10px;
+}
+
+
+

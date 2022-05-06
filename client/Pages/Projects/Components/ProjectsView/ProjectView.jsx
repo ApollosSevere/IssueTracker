@@ -22,7 +22,7 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 
-const ProjectItem = ({ project, removeProject }) => {
+const ProjectItem = ({ project, removeProject, user }) => {
   const history = useHistory();
   const { name, users } = project;
 
@@ -164,22 +164,29 @@ const ProjectItem = ({ project, removeProject }) => {
             <i className="fas fa-ellipsis-v" />
           </DropdownToggle>
           <DropdownMenu className="dropdown-menu-arrow" right>
-            <DropdownItem
-              onClick={(e) => {
-                e.preventDefault();
-                history.push(`/main/addProject/${name}`);
-              }}
-            >
-              Edit
-            </DropdownItem>
-            <DropdownItem
-              onClick={(e) => {
-                e.preventDefault();
-                removeProject(name);
-              }}
-            >
-              Remove
-            </DropdownItem>
+            {(user.roleName === "Master" || user.roleName === "Admin") &&
+            !project.cantModify ? (
+              <>
+                <DropdownItem
+                  onClick={(e) => {
+                    e.preventDefault();
+                    history.push(`/main/addProject/${name}`);
+                  }}
+                >
+                  Edit
+                </DropdownItem>
+                <DropdownItem
+                  onClick={(e) => {
+                    e.preventDefault();
+                    removeProject(name);
+                  }}
+                >
+                  Remove
+                </DropdownItem>
+              </>
+            ) : (
+              <DropdownItem>Unauthorized</DropdownItem>
+            )}
           </DropdownMenu>
         </UncontrolledDropdown>
       </td>
@@ -187,7 +194,13 @@ const ProjectItem = ({ project, removeProject }) => {
   );
 };
 
-export const ProjectView = ({ projects, error, removeProject, isLoading }) => {
+export const ProjectView = ({
+  projects,
+  error,
+  removeProject,
+  isLoading,
+  user,
+}) => {
   return (
     <>
       <tbody>
@@ -217,6 +230,7 @@ export const ProjectView = ({ projects, error, removeProject, isLoading }) => {
                       key={project.name}
                       removeProject={removeProject}
                       project={project}
+                      user={user}
                     />
                   ))
                 ) : (
@@ -238,6 +252,7 @@ export const ProjectView = ({ projects, error, removeProject, isLoading }) => {
 const mapStateToProps = (state) => {
   return {
     error: state.projects.error,
+    user: state.auth,
   };
 };
 

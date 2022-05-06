@@ -29,4 +29,8 @@ module.exports = db.define("project", {
   image_location: {
     type: Sequelize.STRING,
   },
+  cantModify: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 });

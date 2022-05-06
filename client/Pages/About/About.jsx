@@ -1,11 +1,9 @@
 import React from "react";
 
-import { Card, Row, Container } from "reactstrap";
+import { Card } from "reactstrap";
 
 export default function About() {
   return (
-    // <Container className="m-7">
-    // <Row>
     <Card>
       <div class="container body-content">
         <h2>About Bug Tracker</h2>
@@ -22,18 +20,13 @@ export default function About() {
             users can access tickets and projects.
           </p>
           <p>
-            The application was built using ASP.NET MVC and C# with an SQL
-            Server database. Development was completed with Visual Studio
-            Community 2015. Bug Tracker’s webpages use HTML5, model binding with
-            Razor and Bootstrap with the{" "}
-            <a href="http://bootswatch.com/spacelab/" target="_blank">
-              Bootswatch Spacelab theme
-            </a>{" "}
-            applied.{" "}
+            The application was built using Node.js and React with an
+            PostgresSQL database.
           </p>
           <p>
             <b>Roles:</b> Bug Tracker has four roles that users can be assigned
-            to. A user can be in more than one role at one time. Users are
+            to. And one Master role that gives access to all the applications
+            features. A user can be in one role at one time. Users are
             automatically placed in a Submitter role upon registration.
           </p>
           <p>Below are brief descriptions of the permissions of each role:</p>
@@ -49,16 +42,17 @@ export default function About() {
           </p>
           <ul>
             <li>View and edit tickets they have been assigned</li>
+            <li>
+              Granted access to Developers Kanban page to keep track of assigned
+              assignments
+            </li>
           </ul>
           <p>
             <b>Project Manager</b>
           </p>
           <ul>
             <li>View and edit tickets for projects they are assigned to</li>
-            <li>Create new projects</li>
-            <li>Assign users to projects</li>
             <li>Assign a developer to a ticket</li>
-            <li>Archive projects</li>
           </ul>
           <p>
             <b>Admin</b>
@@ -68,11 +62,11 @@ export default function About() {
             <li>View and edit all tickets</li>
             <li>Create new projects</li>
             <li>Assign users to projects</li>
-            <li>Archive projects</li>
+            <li>Remove projects</li>
           </ul>
           <p>
-            For each role, users can add comments or attachments to tickets they
-            have access to.
+            For each role, users can add comments to tickets they have access
+            to.
           </p>
 
           <p>
@@ -84,26 +78,24 @@ export default function About() {
           </p>
           <ul>
             <li>
-              <b>New:</b> Ticket automatically assigned this status on creation
+              <b>Open:</b> Ticket automatically assigned this status on creation
             </li>
             <li>
-              <b>Waiting for support:</b> Ticket automatically changed to this
-              status when it is assigned to a developer
+              <b>In Progress:</b> Ticket automatically changed to this status
+              when it is assigned to a developer
             </li>
             <li>
-              <b>Waiting for customer:</b> Ticket is waiting on a response from
-              a third-party source
+              <b>Additional Info Required:</b> Ticket is waiting on a response
+              from a third-party source
             </li>
-            <li>
-              <b>On hold:</b> Work on the ticket has been suspended
-            </li>
+
             <li>
               <b>Resolved:</b> The issue raised in the ticket has been resolved
             </li>
           </ul>
           <p>
-            <b>Ticket types:</b> A ticket can be of type Error report, Service
-            request, Feature request or Other.
+            <b>Ticket types:</b> A ticket can be of type Error report, Bug,
+            Service request, Feature request or Other.
           </p>
 
           <h2>FAQs</h2>
@@ -117,7 +109,7 @@ export default function About() {
             and submit the ticket.
           </p>
           <p>
-            <b>When are email notifications sent out?</b>
+            <b>When are notifications sent out?</b>
           </p>
           <p>
             Email notifications are sent to developers on the following events:
@@ -129,12 +121,9 @@ export default function About() {
             <li>User other than developer adds a comment or attachment</li>
           </ul>
           <p>
-            <b>Can I change my user name and password?</b>
+            <b>Can I change my user info?</b>
           </p>
-          <p>
-            Yes, any user can edit his or her first and last name, email and/or
-            password. Go to Settings on the top menu to change these.
-          </p>
+          <p>Yes, a user can edit their information on the profile page</p>
           <p>
             <b>How can I get my role changed?</b>
           </p>
@@ -144,7 +133,5 @@ export default function About() {
         <footer></footer>
       </div>
     </Card>
-    //</Row>
-    // </Container>
   );
 }

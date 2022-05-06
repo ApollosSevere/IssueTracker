@@ -294,7 +294,10 @@ const Sidebar = (props) => {
           </Nav>
           <Nav className="mb-md-3" navbar>
             <NavItem className="active-pro active">
-              <NavLink href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adr-admin-sidebar">
+              <NavLink
+                target="_blank"
+                href="https://apollos-portfolio.herokuapp.com/"
+              >
                 <i className="ni ni-spaceship" />
                 View Full Portfolio
               </NavLink>
