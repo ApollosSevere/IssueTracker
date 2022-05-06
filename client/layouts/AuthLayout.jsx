@@ -87,7 +87,7 @@ const AuthLayout = (props) => {
           <Row className="justify-content-center">
             <Switch>
               {getRoutes(routes(props.loggedInUser))}
-              <Redirect from="*" to="/auth/login" />
+              <Redirect from="*" to="/auth/signup" />
             </Switch>
           </Row>
         </Container>
