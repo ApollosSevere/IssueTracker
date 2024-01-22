@@ -10,8 +10,8 @@ const config = {
 
 const dbConfig = {
   HOST: "localhost",
-  USER: "postgres",
-  PASSWORD: "1234",
+  USER: "AXS1QFH",
+  PASSWORD: "1234578",
   DB: "issuetracker",
   dialect: "postgres",
   pool: {
